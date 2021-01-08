@@ -9,143 +9,8 @@ output:
 
 
 
-```r
-# US
-
-us_arg <- read_csv("../data/us-argument-data-clean.csv")
-
-us_arg <- us_arg %>% 
-  mutate(
-    age_gr = cut(age, 
-                 breaks = c(0, median(age, na.rm = TRUE), 100), 
-                 labels = c("Younger", "Older")),
-    verb_ability = ifelse(wordsum > median(wordsum, na.rm = TRUE),
-                          "Higher",
-                          "Lower"),
-    edu = fct_collapse(edu, 
-                       Lower = "<bach", 
-                       Higher = c("bach", "grad")),
-   position = paste0(issue, "_", type)
-  )
-        
-# UK
-
-uk_arg <- read_csv("../data/uk-argument-data-clean.csv")
-
-uk_arg <- uk_arg %>% 
-  mutate(
-    age_gr = cut(age, 
-                 breaks = c(0, median(age, na.rm = TRUE), 100), 
-                 labels = c("Younger", "Older")),
-    polviews = cut(polviews_10, 
-                   breaks = c(0, 3, 6, 10),
-                   include.lowest = TRUE,
-                   labels = c("Left", "Moderate", "Right")),
-       position = paste0(issue, "_", type)
-  ) 
-
-# Israel
-
-il_arg <- read_csv("../data/il-argument-data-clean.csv")
-il_arg <- il_arg %>% 
-  mutate(
-    age_gr = cut(age, 
-                 breaks = c(0, median(age, na.rm = TRUE), 100), 
-                 labels = c("Younger", "Older")),
-    polviews = cut(polviews_10, 
-                   breaks = c(0, 3, 6, 10),
-                   include.lowest = TRUE,
-                   labels = c("Left", "Moderate", "Right")),
-    edu = ifelse(edu > 4, "Higher", "Lower"),
-    position = paste0(issue, "_", type)
-  ) 
-      
-# Brazil
-
-br_arg <- read_csv("../data/br-argument-data-clean.csv")
-br_arg <- br_arg %>% 
-  mutate(
-    age_gr = cut(age, 
-                 breaks = c(0, median(age, na.rm = TRUE), 100), 
-                 labels = c("Younger", "Older")),
-    polviews = cut(polviews_10, 
-                   breaks = c(0, 3, 6, 10),
-                   include.lowest = TRUE,
-                   labels = c("Left", "Moderate", "Right")),
-    edu = ifelse(edu > 4, "Higher", "Lower"),
-    position = paste0(issue, "_", type)
-  )
-
-# Combined dataset
-common_items <- read_csv("../data/gss-and-bsa-common-items.csv")
-
-comb_arg <- bind_rows(
-  us_arg %>% 
-    filter(issue %in% common_items$gss_code) %>% 
-    mutate(sample = "US"), 
-  uk_arg %>% 
-    filter(issue %in% common_items$bsa_code) %>% 
-    # use GSS variable code for issue to unify between US and UK samples
-    rename(bsa_code = issue) %>% 
-    left_join(common_items %>% 
-                select(issue = gss_code, bsa_code, reverse)) %>% 
-    # one BSA item is reversed
-    mutate(
-      type = case_when(
-        reverse == 1 & type == "pro" ~ "against", 
-        reverse == 1 & type == "against" ~ "pro",
-        TRUE ~ type
-      ), 
-      position = paste0(issue, "_", type),
-      sample = "UK") %>% 
-    select(-bsa_code, -reverse), 
-  il_arg %>% 
-    mutate(sample = "IL"), 
-  br_arg %>% 
-    mutate(sample = "BR")
-)
-```
 
 
-```r
-# estimate argument applicability within separate groups defined by group_var
-
-link_by_group <- function(data, group_var) {
-
-group_var <- enquo(group_var)
-
-arg_link_by_group <- data %>% 
-    drop_na(!!group_var) %>% 
-    mutate(group = fct_relabel(!!group_var,
-                               ~as.character(as.numeric(as.factor(.))))) %>%
-    group_by(mf, position, group) %>% 
-    summarise(link = mean(value)) %>% 
-    spread(group, link)
-
-arg_link_by_group %>% 
-  drop_na() %>% 
-  mutate(group = as_label(group_var))
-}
-
-# estimate CCC between argument applicability measures in the groups defined by group_var
-
-ccc_by_group <- function(data, group_var) {
-  group_var <- enquo(group_var)
-  
-  arg_link_by_group <- data %>% 
-    drop_na(!!group_var) %>% 
-    mutate(group = fct_relabel(!!group_var, ~as.character(as.numeric(as.factor(.))))) %>% 
-    group_by(mf, position, group) %>% 
-    summarise(link = mean(value), .groups = "drop") %>% 
-    spread(group, link) 
-  
-  arg_link_by_group %>% 
-    drop_na() %>% 
-    summarise(CCC(`2`, `1`)$rho.c,
-              .groups = "drop") %>% 
-    mutate(group = as_label(group_var))
-}
-```
 
 
 # Study 1. US
@@ -209,7 +74,10 @@ us_arg_connection %>%
   labs(y = "Arguments applicablity", x = "Moral foundation")
 ```
 
-![Figure 1. Boxplots showing how applicability, estimated in the entire sample of Study 1, of eight different kinds of moral arguments varied across 196 moral opinions. The box represents the interquartile (IQ) range with the dark line indicating the median. The whiskers reach the min and max values in case these are at most 1.5 times the box height outside the IQ range. Circles and stars signify outliers (values between 1.5 and 3 times the IQ range) and extreme outliers (more than 3 times the IQ range), respectively.](manuscript-results_files/figure-html/us_boxpl-1.jpeg)
+<div class="figure" style="text-align: center">
+<img src="manuscript-results_files/figure-html/us_boxpl-1.jpeg" alt="Figure 1. Boxplots showing how applicability, estimated in the entire sample of Study 1, of eight different kinds of moral arguments varied across 196 moral opinions. The box represents the interquartile (IQ) range with the dark line indicating the median. The whiskers reach the min and max values in case these are at most 1.5 times the box height outside the IQ range. Circles and stars signify outliers (values between 1.5 and 3 times the IQ range) and extreme outliers (more than 3 times the IQ range), respectively." width="60%" />
+<p class="caption">Figure 1. Boxplots showing how applicability, estimated in the entire sample of Study 1, of eight different kinds of moral arguments varied across 196 moral opinions. The box represents the interquartile (IQ) range with the dark line indicating the median. The whiskers reach the min and max values in case these are at most 1.5 times the box height outside the IQ range. Circles and stars signify outliers (values between 1.5 and 3 times the IQ range) and extreme outliers (more than 3 times the IQ range), respectively.</p>
+</div>
 
 ```r
 #ggsave("fig1_us-arg-applicability.jpeg", width = 180, height = 80, units = "mm", dpi = 300)
@@ -362,7 +230,10 @@ cowplot::plot_grid(pl1, pl2, pl3, pl4, pl5,
                    label_size = 11)
 ```
 
-![Figure 2. Scatter plots of 1,568 argument applicability scores (8 types of arguments by 196 moral opinions), measured in different groups in the United States: women vs. men (A),  younger vs. older (B), liberals vs. conservatives (C), higher vs. lower education (D), and higher vs. lower verbal ability (E). Regression lines in blue and reference lines for perfect agreement in black.](manuscript-results_files/figure-html/unnamed-chunk-1-1.jpeg)
+<div class="figure" style="text-align: center">
+<img src="manuscript-results_files/figure-html/unnamed-chunk-1-1.jpeg" alt="Figure 2. Scatter plots of 1,568 argument applicability scores (8 types of arguments by 196 moral opinions), measured in different groups in the United States: women vs. men (A),  younger vs. older (B), liberals vs. conservatives (C), higher vs. lower education (D), and higher vs. lower verbal ability (E). Regression lines in blue and reference lines for perfect agreement in black." width="60%" />
+<p class="caption">Figure 2. Scatter plots of 1,568 argument applicability scores (8 types of arguments by 196 moral opinions), measured in different groups in the United States: women vs. men (A),  younger vs. older (B), liberals vs. conservatives (C), higher vs. lower education (D), and higher vs. lower verbal ability (E). Regression lines in blue and reference lines for perfect agreement in black.</p>
+</div>
 
 ```r
 # ggsave("fig2_us-scatter-by-groups.jpeg", width = 180, height = 100, 
@@ -429,7 +300,10 @@ uk_arg_connection %>%
   labs(y = "Arguments applicablity", x = "Moral foundation")
 ```
 
-![Figure 3. Boxplots (defined in Figure 2) showing how applicability, estimated in the entire sample of Study 2, of eight different kinds of moral arguments varied across 216 moral opinions.](manuscript-results_files/figure-html/uk_boxpl-1.jpeg)
+<div class="figure" style="text-align: center">
+<img src="manuscript-results_files/figure-html/uk_boxpl-1.jpeg" alt="Figure 3. Boxplots (defined in Figure 2) showing how applicability, estimated in the entire sample of Study 2, of eight different kinds of moral arguments varied across 216 moral opinions." width="60%" />
+<p class="caption">Figure 3. Boxplots (defined in Figure 2) showing how applicability, estimated in the entire sample of Study 2, of eight different kinds of moral arguments varied across 216 moral opinions.</p>
+</div>
 
 ```r
 # ggsave("fig3_uk-arg-applicability.jpeg", width = 180, height = 80, units = "mm", dpi = 300)
@@ -570,7 +444,7 @@ cowplot::plot_grid(pl1, pl2, pl3, pl4,
                    label_size = 9)
 ```
 
-![](manuscript-results_files/figure-html/unnamed-chunk-2-1.jpeg)<!-- -->
+<img src="manuscript-results_files/figure-html/unnamed-chunk-2-1.jpeg" width="60%" style="display: block; margin: auto;" />
 
 ```r
 # ggsave("fig4_uk-scatter-by-groups.jpeg", width = 85, height = 70, units = "mm", dpi = 300)
@@ -847,7 +721,10 @@ cowplot::plot_grid(us_uk_pl, NULL, NULL,
                    us_br_pl, uk_br_pl, il_br_pl) 
 ```
 
-![Figure 5. Scatter plots of 432 argument applicability scores for (8 types of arguments by 54 moral opinions). Each row compares data from two of our four countries US, UK, Israel (IL) and Brazil (BR). Every plot includes the CCC value with 95% confidence interval. Regression lines in blue and reference lines for perfect agreement in black.](manuscript-results_files/figure-html/com_scatter-1.jpeg)
+<div class="figure" style="text-align: center">
+<img src="manuscript-results_files/figure-html/com_scatter-1.jpeg" alt="Figure 5. Scatter plots of 432 argument applicability scores for (8 types of arguments by 54 moral opinions). Each row compares data from two of our four countries US, UK, Israel (IL) and Brazil (BR). Every plot includes the CCC value with 95% confidence interval. Regression lines in blue and reference lines for perfect agreement in black." width="60%" />
+<p class="caption">Figure 5. Scatter plots of 432 argument applicability scores for (8 types of arguments by 54 moral opinions). Each row compares data from two of our four countries US, UK, Israel (IL) and Brazil (BR). Every plot includes the CCC value with 95% confidence interval. Regression lines in blue and reference lines for perfect agreement in black.</p>
+</div>
 
 ```r
 # ggsave("fig5_scatter-by-cntry.jpeg", width = 180, height = 120, 
