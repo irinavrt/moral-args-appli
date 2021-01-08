@@ -1,0 +1,741 @@
+---
+title: "Different populations agree on which moral arguments underlie which opinions"
+output:
+  html_document:
+    keep_md: yes
+---
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
+                      dpi = 300, dev="jpeg", fig.width = 7,
+                      tidy = TRUE)
+
+library(readr)
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(forcats)
+library(ggplot2)
+library(DescTools)
+library(kableExtra)
+library(cowplot)
+
+theme_set(theme_half_open(11))
+
+```
+
+```{r data}
+
+# US
+
+us_arg <- read_csv("../data/us-argument-data-clean.csv")
+
+us_arg <- us_arg %>% 
+  mutate(
+    age_gr = cut(age, 
+                 breaks = c(0, median(age, na.rm = TRUE), 100), 
+                 labels = c("Younger", "Older")),
+    verb_ability = ifelse(wordsum > median(wordsum, na.rm = TRUE),
+                          "Higher",
+                          "Lower"),
+    edu = fct_collapse(edu, 
+                       Lower = "<bach", 
+                       Higher = c("bach", "grad")),
+   position = paste0(issue, "_", type)
+  )
+        
+# UK
+
+uk_arg <- read_csv("../data/uk-argument-data-clean.csv")
+
+uk_arg <- uk_arg %>% 
+  mutate(
+    age_gr = cut(age, 
+                 breaks = c(0, median(age, na.rm = TRUE), 100), 
+                 labels = c("Younger", "Older")),
+    polviews = cut(polviews_10, 
+                   breaks = c(0, 3, 6, 10),
+                   include.lowest = TRUE,
+                   labels = c("Left", "Moderate", "Right")),
+       position = paste0(issue, "_", type)
+  ) 
+
+# Israel
+
+il_arg <- read_csv("../data/il-argument-data-clean.csv")
+il_arg <- il_arg %>% 
+  mutate(
+    age_gr = cut(age, 
+                 breaks = c(0, median(age, na.rm = TRUE), 100), 
+                 labels = c("Younger", "Older")),
+    polviews = cut(polviews_10, 
+                   breaks = c(0, 3, 6, 10),
+                   include.lowest = TRUE,
+                   labels = c("Left", "Moderate", "Right")),
+    edu = ifelse(edu > 4, "Higher", "Lower"),
+    position = paste0(issue, "_", type)
+  ) 
+      
+# Brazil
+
+br_arg <- read_csv("../data/br-argument-data-clean.csv")
+br_arg <- br_arg %>% 
+  mutate(
+    age_gr = cut(age, 
+                 breaks = c(0, median(age, na.rm = TRUE), 100), 
+                 labels = c("Younger", "Older")),
+    polviews = cut(polviews_10, 
+                   breaks = c(0, 3, 6, 10),
+                   include.lowest = TRUE,
+                   labels = c("Left", "Moderate", "Right")),
+    edu = ifelse(edu > 4, "Higher", "Lower"),
+    position = paste0(issue, "_", type)
+  )
+
+# Combined dataset
+common_items <- read_csv("../data/gss-and-bsa-common-items.csv")
+
+comb_arg <- bind_rows(
+  us_arg %>% 
+    filter(issue %in% common_items$gss_code) %>% 
+    mutate(sample = "US"), 
+  uk_arg %>% 
+    filter(issue %in% common_items$bsa_code) %>% 
+    # use GSS variable code for issue to unify between US and UK samples
+    rename(bsa_code = issue) %>% 
+    left_join(common_items %>% 
+                select(issue = gss_code, bsa_code, reverse)) %>% 
+    # one BSA item is reversed
+    mutate(
+      type = case_when(
+        reverse == 1 & type == "pro" ~ "against", 
+        reverse == 1 & type == "against" ~ "pro",
+        TRUE ~ type
+      ), 
+      position = paste0(issue, "_", type),
+      sample = "UK") %>% 
+    select(-bsa_code, -reverse), 
+  il_arg %>% 
+    mutate(sample = "IL"), 
+  br_arg %>% 
+    mutate(sample = "BR")
+)
+
+```
+
+```{r functions}
+
+# estimate argument applicability within separate groups defined by group_var
+
+link_by_group <- function(data, group_var) {
+
+group_var <- enquo(group_var)
+
+arg_link_by_group <- data %>% 
+    drop_na(!!group_var) %>% 
+    mutate(group = fct_relabel(!!group_var,
+                               ~as.character(as.numeric(as.factor(.))))) %>%
+    group_by(mf, position, group) %>% 
+    summarise(link = mean(value)) %>% 
+    spread(group, link)
+
+arg_link_by_group %>% 
+  drop_na() %>% 
+  mutate(group = as_label(group_var))
+}
+
+# estimate CCC between argument applicability measures in the groups defined by group_var
+
+ccc_by_group <- function(data, group_var) {
+  group_var <- enquo(group_var)
+  
+  arg_link_by_group <- data %>% 
+    drop_na(!!group_var) %>% 
+    mutate(group = fct_relabel(!!group_var, ~as.character(as.numeric(as.factor(.))))) %>% 
+    group_by(mf, position, group) %>% 
+    summarise(link = mean(value), .groups = "drop") %>% 
+    spread(group, link) 
+  
+  arg_link_by_group %>% 
+    drop_na() %>% 
+    summarise(CCC(`2`, `1`)$rho.c,
+              .groups = "drop") %>% 
+    mutate(group = as_label(group_var))
+}
+
+
+```
+
+
+# Study 1. US
+
+## Method
+
+```{r us_sample}
+
+us_sample <- us_arg %>% 
+  select(id, age, sex, polviews, edu, verb_ability, issue) %>% 
+  distinct() %>% 
+  group_by(id, age, sex, polviews, edu, verb_ability) %>% 
+  summarise(n_issues = n()) %>% 
+  ungroup()
+
+us_sample %>% 
+  summarise(n = n(),
+            mean(n_issues),
+            women = mean(sex == "female", na.rm = TRUE),
+            mean_age = mean(age, na.rm = TRUE),
+            sd_age = sd(age, na.rm = TRUE),
+            liberal = mean(polviews == "liberal", na.rm = TRUE),
+            conservative = mean(polviews == "conservative", na.rm = TRUE), 
+            verb_higher = mean(verb_ability == "Higher"), 
+            edu_higher = mean(edu == "Higher"))
+
+```
+
+## Results
+
+```{r us_boxpl, fig.width=7, fig.height=5, fig.cap = "Figure 1. Boxplots showing how applicability, estimated in the entire sample of Study 1, of eight different kinds of moral arguments varied across 196 moral opinions. The box represents the interquartile (IQ) range with the dark line indicating the median. The whiskers reach the min and max values in case these are at most 1.5 times the box height outside the IQ range. Circles and stars signify outliers (values between 1.5 and 3 times the IQ range) and extreme outliers (more than 3 times the IQ range), respectively."}
+
+
+us_arg_connection  <- us_arg %>% 
+  group_by(mf, position) %>% 
+  summarise(link = mean(value))
+
+us_arg_connection <- us_arg_connection %>% 
+  mutate(iqr = IQR(link), 
+         lower = quantile(link, .25), 
+         higher = quantile(link, .75),
+         outl_type = case_when(
+          link < lower - 3*iqr ~ 8, 
+          link > higher + 3*iqr ~ 8,
+          link < lower - 1.5*iqr ~ 1, 
+          link > higher + 1.5*iqr ~ 1
+          ))
+
+us_arg_connection %>% 
+  ggplot(aes(mf, link)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_point(aes(shape = outl_type), size = 1.5, stroke = .5) +
+  scale_shape_identity() +
+  theme(legend.position = "none") +
+  labs(y = "Arguments applicablity", x = "Moral foundation")
+
+#ggsave("fig1_us-arg-applicability.jpeg", width = 180, height = 80, units = "mm", dpi = 300)
+
+```
+
+```{r us_rand_ccc, cache = TRUE}
+
+# Simulate 100 random splits in two even groups and calculate the mean CCC
+set.seed(8404)
+us_rand_gr_mult <- tibble(id = rep(unique(us_arg$id), 100),
+                       draw = rep(1:100, 
+                                    each = length(unique(us_arg$id)))) %>%
+  mutate(rand_gr = rbinom(n = n(), size = 1, prob = .5),
+         rand_gr = factor(rand_gr))
+
+
+us_ccc_rand_gr <- left_join(us_arg, us_rand_gr_mult) %>%
+  group_by(draw, mf, position, rand_gr) %>%
+  summarise(link = mean(value)) %>%
+  spread(rand_gr, link) %>% 
+  group_by(draw) %>%
+  summarise(DescTools::CCC(`0`, `1`)$rho.c,
+            r = cor(`0`, `1`, use = "pair")) %>% 
+  summarise(rand_gr = mean(est))
+
+```
+
+
+```{r us_ccc}
+
+us_mf_agreement <- bind_rows(
+  ccc_by_group(us_arg, polviews),
+  ccc_by_group(us_arg, sex),
+  ccc_by_group(us_arg, age_gr),
+  ccc_by_group(us_arg, verb_ability),
+  ccc_by_group(us_arg, edu)
+)
+
+us_mf_agreement <- us_mf_agreement %>% 
+  mutate(label = sprintf("%.2f [%.2f, %.2f]", est, lwr.ci, upr.ci), 
+         group = factor(group,
+                        levels = c("sex", 
+                                   "age_gr",
+                                   "polviews", 
+                                   "edu",
+                                   "verb_ability"), 
+                        labels = c("Sex", 
+                                   "Age", 
+                                   "Ideology", 
+                                   "Education",
+                                   "Verbal ability"))) %>% 
+  arrange(group)
+
+us_mf_agreement %>%  
+  select(group, label) %>% 
+  kbl(col.names = c(" ", "CCC with 95% CI"),
+      caption = "Table 2. CCC values with 95% confidence interval.") %>% 
+  kable_classic(full_width = FALSE) 
+
+```
+
+
+```{r fig.height=3.9, fig.cap="Figure 2. Scatter plots of 1,568 argument applicability scores (8 types of arguments by 196 moral opinions), measured in different groups in the United States: women vs. men (A),  younger vs. older (B), liberals vs. conservatives (C), higher vs. lower education (D), and higher vs. lower verbal ability (E). Regression lines in blue and reference lines for perfect agreement in black."}
+
+us_mf_link_by_gr <- bind_rows(
+  link_by_group(us_arg, polviews),
+  link_by_group(us_arg, sex),
+  link_by_group(us_arg, age_gr),
+  link_by_group(us_arg, verb_ability),
+  link_by_group(us_arg, edu)
+)
+
+scatter_plot <- function(data) {
+
+  data %>% 
+    ggplot(aes(`1`, `2`)) +
+    geom_point(alpha = .2) +
+    geom_abline() +
+    geom_smooth(method = "lm", se = FALSE) +
+    scale_x_continuous(limits = c(0, 1), 
+                       breaks = c(0, .25, .50, .75, 1))+ 
+    scale_y_continuous(limits = c(0, 1), 
+                       breaks = c(0, .25, .5, .75, 1)) +
+    theme(axis.text = element_text(size = 9),
+          plot.margin = margin(t = 1, r = 5, b = 1, l = 5))
+}
+
+pl1 <-  us_mf_link_by_gr %>% 
+  filter(group == "sex") %>% 
+  scatter_plot() +
+  labs(x = "Women", y = "Men") +
+  theme(strip.background = element_blank(), strip.text = element_blank())
+
+pl2 <-  us_mf_link_by_gr %>% 
+  filter(group == "age_gr") %>% 
+  scatter_plot() +
+  labs(x = "Younger", y = "Older")+
+  theme(strip.background = element_blank(), strip.text = element_blank())
+
+pl3 <- us_mf_link_by_gr %>% 
+  filter(group == "polviews") %>% 
+  scatter_plot() +
+  labs(x = "Liberals", y = "Conservatives")
+
+pl4 <- us_mf_link_by_gr %>% 
+  filter(group == "edu") %>% 
+  scatter_plot() +
+  labs(x = "Lower education", y = "Higher education")+
+  theme(strip.background = element_blank(), strip.text = element_blank())
+
+pl5 <-  us_mf_link_by_gr %>% 
+  filter(group == "verb_ability") %>% 
+  scatter_plot() +
+  labs(x = "Higher verbal ability", y = "Lower\nverbal ability")+
+  theme(strip.background = element_blank(), strip.text = element_blank())
+
+
+cowplot::plot_grid(pl1, pl2, pl3, pl4, pl5, 
+                   labels = "AUTO", 
+                   label_size = 11)
+
+# ggsave("fig2_us-scatter-by-groups.jpeg", width = 180, height = 100, 
+#        units = "mm", dpi = 300)
+
+```
+
+
+# Study 2. UK
+
+## Method
+
+```{r uk_sample}
+
+uk_sample <- uk_arg %>% 
+  select(polviews, id, issue, age, sex, edu) %>% 
+  distinct() %>% 
+  group_by(polviews, id, age, sex, edu) %>% 
+  summarise(n_issues = n(), .groups = "drop")
+
+uk_sample %>% 
+  summarise(n = n(),
+            mean(n_issues),
+            women = mean(sex == "Female", na.rm = TRUE),
+            mean_age = mean(age, na.rm = TRUE),
+            sd_age = sd(age, na.rm = TRUE),
+            left = mean(polviews == "Left", na.rm = TRUE),
+            moderate = mean(polviews == "Moderate", na.rm = TRUE),
+            right = mean(polviews == "Right", na.rm = TRUE),
+            edu_higher = mean(edu == "higher", na.rm = TRUE))
+
+```
+
+## Results
+
+```{r uk_boxpl, fig.height=3.1, fig.cap = "Figure 3. Boxplots (defined in Figure 2) showing how applicability, estimated in the entire sample of Study 2, of eight different kinds of moral arguments varied across 216 moral opinions."}
+
+
+uk_arg_connection  <- uk_arg %>% 
+  group_by(mf, position) %>% 
+  summarise(link = mean(value))
+
+uk_arg_connection <- uk_arg_connection %>% 
+  mutate(iqr = IQR(link), 
+         lower = quantile(link, .25), 
+         higher = quantile(link, .75),
+         outl_type = case_when(
+          link < lower - 3*iqr ~ 8, 
+          link > higher + 3*iqr ~ 8,
+          link < lower - 1.5*iqr ~ 1, 
+          link > higher + 1.5*iqr ~ 1
+          ))
+
+uk_arg_connection %>% 
+  ggplot(aes(mf, link)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_point(aes(shape = outl_type), size = 1.5, stroke = .5) +
+  scale_shape_identity() +
+  theme(legend.position = "none") +
+  labs(y = "Arguments applicablity", x = "Moral foundation")
+
+# ggsave("fig3_uk-arg-applicability.jpeg", width = 180, height = 80, units = "mm", dpi = 300)
+
+```
+
+```{r uk_rand_ccc, cache = TRUE}
+
+# Simulate 100 random splits in two even groups and calculate the mean CCC
+set.seed(8405)
+uk_rand_gr_mult <- tibble(id = rep(unique(uk_arg$id), 100),
+                       draw = rep(1:100, 
+                                    each = length(unique(uk_arg$id)))) %>%
+  mutate(rand_gr = rbinom(n = n(), size = 1, prob = .5),
+         rand_gr = factor(rand_gr))
+
+
+uk_ccc_rand_gr <- left_join(uk_arg, uk_rand_gr_mult) %>%
+  group_by(draw, mf, position, rand_gr) %>%
+  summarise(link = mean(value)) %>%
+  spread(rand_gr, link) %>% 
+  group_by(draw) %>%
+  summarise(DescTools::CCC(`0`, `1`)$rho.c,
+            r = cor(`0`, `1`, use = "pair")) %>% 
+  summarise(rand_gr = mean(est))
+
+```
+
+
+```{r uk_ccc}
+
+uk_mf_agreement <- bind_rows(
+  ccc_by_group(filter(uk_arg, 
+                      polviews %in% c("Left", "Right")) %>% 
+                 droplevels(), 
+               polviews),
+  ccc_by_group(uk_arg, sex),
+  ccc_by_group(uk_arg, age_gr),
+  ccc_by_group(uk_arg, edu)
+)
+
+uk_mf_agreement <- uk_mf_agreement %>% 
+  mutate(label = sprintf("%.2f [%.2f, %.2f]", est, lwr.ci, upr.ci), 
+         group = factor(group,
+                        levels = c("sex", 
+                                   "age_gr",
+                                   "polviews", 
+                                   "edu"), 
+                        labels = c("Sex", 
+                                   "Age", 
+                                   "Ideology", 
+                                   "Education"))) %>% 
+  arrange(group)
+
+uk_mf_agreement %>%  
+  select(group, label) %>% 
+  kbl(col.names = c(" ", "CCC with 95% CI")) %>% 
+  kable_classic(full_width = FALSE) 
+
+```
+
+
+```{r fig.width=3.3, fig.height=2.7}
+
+uk_mf_diff <- bind_rows(
+  link_by_group(filter(uk_arg, polviews %in% c("Left", "Right")) %>%
+                  droplevels(), 
+                polviews),
+  link_by_group(uk_arg, sex),
+  link_by_group(uk_arg, age_gr),
+  link_by_group(uk_arg, edu)
+) 
+
+scatter_plot <- function(data) {
+
+  data %>% 
+    ggplot(aes(`1`, `2`)) +
+    geom_point(alpha = .2) +
+    geom_abline() +
+    geom_smooth(method = "lm", se = FALSE) +
+    scale_x_continuous(limits = c(0, 1), 
+                       breaks = c(0, .25, .50, .75, 1)) + 
+    scale_y_continuous(limits = c(0, 1), breaks = c(0, .25, .5, .75, 1)) +
+    theme_half_open(9) 
+}
+
+
+pl1 <-  uk_mf_diff %>% 
+  filter(group == "sex") %>% 
+  scatter_plot() +
+  labs(x = "Women", y = "Men") +
+  theme(strip.background = element_blank(), strip.text = element_blank())
+
+pl2 <-  uk_mf_diff %>% 
+  filter(group == "age_gr") %>% 
+  scatter_plot() +
+  labs(x = "Younger", y = "Older")+
+  theme(strip.background = element_blank(), strip.text = element_blank())
+
+pl3 <- uk_mf_diff %>% 
+  filter(group == "polviews") %>% 
+  scatter_plot() +
+  labs(x = "Left-wing", y = "Right-wing")
+
+pl4 <- uk_mf_diff %>% 
+  filter(group == "edu") %>% 
+  scatter_plot() +
+  labs(x = "Lower education", y = "Higher education")+
+  theme(axis.title.y = element_text(size = 8))
+
+
+cowplot::plot_grid(pl1, pl2, pl3, pl4,
+                   labels = "AUTO", 
+                   label_size = 9)
+
+
+# ggsave("fig4_uk-scatter-by-groups.jpeg", width = 85, height = 70, units = "mm", dpi = 300)
+
+```
+
+
+# Study 3. Combined US, UK, IL, and BR analysis 
+
+## Method
+
+```{r common_items}
+
+common_items %>% 
+  mutate(bsa_text = ifelse(reverse == 1, 
+                           paste0(bsa_text, "*"),
+                           bsa_text)) %>% 
+  select(gss_text, bsa_text) %>% 
+  kbl(col.names = c("General Social Survey items",
+                    "British Social Attitudes items"),
+      caption = "Table 4. Matching items identified in the GSS and BSA. An asterisk (*) indicates that the issue positions were reverse coded in the UK version to match the US version.") %>% 
+    kable_classic() 
+
+
+```
+
+### IL sample
+
+```{r il_sample}
+
+il_sample <- il_arg %>% 
+  select(id, issue, age, sex, polviews) %>% 
+  distinct() %>% 
+  group_by(id, age, sex, polviews) %>% 
+  summarise(n_issues = n()) %>% 
+  ungroup()
+
+il_sample %>% 
+  summarise(n = n(),
+            mean(n_issues),
+            women = mean(sex == "Female", na.rm = TRUE),
+            mean_age = mean(age, na.rm = TRUE),
+            sd_age = sd(age, na.rm = TRUE),
+            left = mean(polviews == "Left", na.rm = TRUE),
+            moderate = mean(polviews == "Moderate", na.rm = TRUE),
+            right = mean(polviews == "Right", na.rm = TRUE))
+
+```
+
+### BR sample
+
+```{r br_sample}
+
+br_sample <- br_arg %>% 
+  select(id, issue, age, sex, polviews) %>% 
+  distinct() %>% 
+  group_by(id, age, sex, polviews) %>% 
+  summarise(n_issues = n()) %>% 
+  ungroup()
+
+br_sample %>% 
+  summarise(n = n(),
+            mean(n_issues),
+            women = mean(sex == "Female", na.rm = TRUE),
+            mean_age = mean(age, na.rm = TRUE),
+            sd_age = sd(age, na.rm = TRUE),
+            left = mean(polviews == "Left", na.rm = TRUE),
+            moderate = mean(polviews == "Moderate", na.rm = TRUE),
+            right = mean(polviews == "Right", na.rm = TRUE))
+
+```
+
+## Results
+
+
+```{r com_scatter, fig.width = 4.7, fig.cap="Figure 5. Scatter plots of 432 argument applicability scores for (8 types of arguments by 54 moral opinions). Each row compares data from two of our four countries US, UK, Israel (IL) and Brazil (BR). Every plot includes the CCC value with 95% confidence interval. Regression lines in blue and reference lines for perfect agreement in black."}
+
+improve_plot <- function(pl, label_data) {
+  ccc_label <- sprintf("%.2f [%.2f, %.2f]", 
+                       label_data$est, 
+                       label_data$lwr.ci, 
+                       label_data$upr.ci)
+  
+  pl +
+    geom_point(alpha = .4) +
+    geom_abline() +
+    geom_smooth(method = "lm", se = FALSE) +
+    annotate(geom = "text", label = ccc_label,
+             x = 0, y = .95, hjust = 0, size = 3.3) +
+    scale_x_continuous(limits = c(0, 1), 
+                       breaks = c(0, .25, .50, .75, 1)) + 
+    scale_y_continuous(limits = c(0, 1), 
+                       breaks = c(0, .25, .5, .75, 1)) +
+    theme(axis.text = element_text(size = 9),
+          plot.margin = margin(t = 1, r = 5, b = 1, l = 5), 
+          strip.text = element_text(size = 12))
+}
+
+
+arg_link_by_group <- comb_arg %>%
+  group_by(mf, position, sample) %>%
+  summarise(link = mean(value), .groups = "drop") %>%
+  spread(sample, link)
+
+
+us_uk_pl <- arg_link_by_group %>% 
+  ggplot(aes(US, UK)) %>% 
+  improve_plot(label_data = summarise(arg_link_by_group, 
+                                      CCC(US, UK)$rho.c)) + 
+  labs(x = "US sample", y = "UK sample")
+
+us_il_pl <- arg_link_by_group %>% 
+  ggplot(aes(US, IL)) %>% 
+  improve_plot(label_data = summarise(arg_link_by_group, 
+                                      CCC(US, IL)$rho.c)) + 
+  labs(x = "US sample", y = "IL sample") 
+
+us_br_pl <- arg_link_by_group %>% 
+  ggplot(aes(US, BR)) %>% 
+  improve_plot(label_data = summarise(arg_link_by_group, 
+                                      CCC(US, BR)$rho.c)) + 
+  labs(x = "US sample", y = "BR sample") 
+
+uk_il_pl <- arg_link_by_group %>% 
+  ggplot(aes(UK, IL)) %>% 
+  improve_plot(label_data = summarise(arg_link_by_group, 
+                                      CCC(UK, IL)$rho.c)) + 
+  labs(x = "UK sample", y = "IL sample") 
+
+
+uk_br_pl <- arg_link_by_group %>% 
+  ggplot(aes(UK, BR)) %>% 
+  improve_plot(label_data = summarise(arg_link_by_group, 
+                                      CCC(UK, BR)$rho.c)) + 
+  labs(x = "UK sample", y = "BR sample") 
+
+il_br_pl <- arg_link_by_group %>% 
+  ggplot(aes(IL, BR)) %>% 
+  improve_plot(label_data = summarise(arg_link_by_group, 
+                                      CCC(IL, BR)$rho.c)) + 
+  labs(x = "IL sample", y = "BB sample") 
+
+cowplot::plot_grid(us_uk_pl, NULL, NULL,
+                   us_il_pl, uk_il_pl, NULL,
+                   us_br_pl, uk_br_pl, il_br_pl) 
+
+# ggsave("fig5_scatter-by-cntry.jpeg", width = 180, height = 120, 
+#        units = "mm", dpi = 300)
+
+```
+
+## Agreement on argument applicability
+
+```{r agr_ccc, cache = TRUE}
+
+comb_arg_full <- bind_rows(
+  comb_arg %>% 
+    filter(sample %in% c("IL", "BR")),
+  us_arg %>%  mutate(sample = "US"),
+  uk_arg %>% mutate(sample = "UK") 
+)
+
+# Probability to agree for each issue
+  p_agree <- comb_arg_full %>%
+    filter(type == "pro") %>%
+    select(sample, id, issue, opinion) %>%
+    distinct() %>%
+    group_by(sample, issue) %>%
+    mutate(p = mean(opinion)) %>% 
+    select(-opinion)
+
+estimate_random_ccc <- function(data) {
+  
+  # Draw random opinion for each issue and espimated p
+  rand_opin_simulated <- data %>% 
+    mutate(pro = rbinom(n = n(), size = 1, prob = p),
+           against = 1 - pro) %>%
+    gather("type", "rand_opinion", pro, against)
+  
+  # Join argument data and calculate CCC
+  left_join(rand_opin_simulated, 
+            comb_arg_full %>% 
+              select(sample, id, issue, mf, value),
+            by = c("sample", "id", "issue")) %>% 
+    group_by(sample, mf, issue, type, rand_opinion) %>%
+    summarise(link = mean(value), .groups = "drop") %>%
+    spread(rand_opinion, link) %>%
+    drop_na() %>%
+    group_by(sample) %>%
+    summarise(est = CCC(`0`, `1`)$rho.c$est, .groups = "drop") 
+}
+
+set.seed(28943)
+
+# Make 100 ccc simulations and average 
+random_ccc <- map_df(1:100, ~estimate_random_ccc(p_agree)) %>% 
+  group_by(sample) %>% 
+  summarise(exp_ccc = mean(est))
+
+ccc_for_agreement <- comb_arg_full %>% 
+  group_by(sample, mf, issue, position, opinion) %>% 
+  summarise(link = mean(value), .groups = "drop") %>% 
+  spread(opinion, link) %>% 
+  drop_na() %>% 
+  group_by(sample) %>% 
+  summarise(n_opinin = n_distinct(position), CCC(`0`, `1`)$rho.c) %>% 
+  transmute(sample, 
+            n_opinin, 
+            ccc = sprintf("%.2f [%.2f, %.2f]", est, lwr.ci, upr.ci)) 
+
+left_join(ccc_for_agreement, random_ccc) %>%
+  mutate(sample = fct_rev(sample),
+         exp_ccc = sprintf("%.2f", exp_ccc)) %>% 
+  arrange(sample) %>% 
+  kbl(col.names = c(
+    "Country", 
+    "Number of opinions",
+    "CCC with 95% CI",
+    "Expected CCC under perfect agreement"
+    )) %>% 
+  kable_classic(full_width = FALSE) 
+  
+```
+
+
