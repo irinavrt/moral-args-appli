@@ -231,7 +231,7 @@ cowplot::plot_grid(pl1, pl2, pl3, pl4, pl5,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="manuscript-results_files/figure-html/unnamed-chunk-1-1.jpeg" alt="Figure 2. Scatter plots of 1,568 argument applicability scores (8 types of arguments by 196 moral opinions), measured in different groups in the United States: women vs. men (A),  younger vs. older (B), liberals vs. conservatives (C), higher vs. lower education (D), and higher vs. lower verbal ability (E). Regression lines in blue and reference lines for perfect agreement in black." width="60%" />
+<img src="manuscript-results_files/figure-html/unnamed-chunk-1-1.jpeg" alt="Figure 2. Scatter plots of 1,568 argument applicability scores (8 types of arguments by 196 moral opinions), measured in different groups in the United States: women vs. men (A),  younger vs. older (B), liberals vs. conservatives (C), higher vs. lower education (D), and higher vs. lower verbal ability (E). Regression lines in blue and reference lines for perfect agreement in black." width="40%" />
 <p class="caption">Figure 2. Scatter plots of 1,568 argument applicability scores (8 types of arguments by 196 moral opinions), measured in different groups in the United States: women vs. men (A),  younger vs. older (B), liberals vs. conservatives (C), higher vs. lower education (D), and higher vs. lower verbal ability (E). Regression lines in blue and reference lines for perfect agreement in black.</p>
 </div>
 
@@ -301,7 +301,7 @@ uk_arg_connection %>%
 ```
 
 <div class="figure" style="text-align: center">
-<img src="manuscript-results_files/figure-html/uk_boxpl-1.jpeg" alt="Figure 3. Boxplots (defined in Figure 2) showing how applicability, estimated in the entire sample of Study 2, of eight different kinds of moral arguments varied across 216 moral opinions." width="60%" />
+<img src="manuscript-results_files/figure-html/uk_boxpl-1.jpeg" alt="Figure 3. Boxplots (defined in Figure 2) showing how applicability, estimated in the entire sample of Study 2, of eight different kinds of moral arguments varied across 216 moral opinions." width="40%" />
 <p class="caption">Figure 3. Boxplots (defined in Figure 2) showing how applicability, estimated in the entire sample of Study 2, of eight different kinds of moral arguments varied across 216 moral opinions.</p>
 </div>
 
@@ -444,7 +444,7 @@ cowplot::plot_grid(pl1, pl2, pl3, pl4,
                    label_size = 9)
 ```
 
-<img src="manuscript-results_files/figure-html/unnamed-chunk-2-1.jpeg" width="60%" style="display: block; margin: auto;" />
+<img src="manuscript-results_files/figure-html/unnamed-chunk-2-1.jpeg" width="40%" style="display: block; margin: auto;" />
 
 ```r
 # ggsave("fig4_uk-scatter-by-groups.jpeg", width = 85, height = 70, units = "mm", dpi = 300)
@@ -722,7 +722,7 @@ cowplot::plot_grid(us_uk_pl, NULL, NULL,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="manuscript-results_files/figure-html/com_scatter-1.jpeg" alt="Figure 5. Scatter plots of 432 argument applicability scores for (8 types of arguments by 54 moral opinions). Each row compares data from two of our four countries US, UK, Israel (IL) and Brazil (BR). Every plot includes the CCC value with 95% confidence interval. Regression lines in blue and reference lines for perfect agreement in black." width="60%" />
+<img src="manuscript-results_files/figure-html/com_scatter-1.jpeg" alt="Figure 5. Scatter plots of 432 argument applicability scores for (8 types of arguments by 54 moral opinions). Each row compares data from two of our four countries US, UK, Israel (IL) and Brazil (BR). Every plot includes the CCC value with 95% confidence interval. Regression lines in blue and reference lines for perfect agreement in black." width="40%" />
 <p class="caption">Figure 5. Scatter plots of 432 argument applicability scores for (8 types of arguments by 54 moral opinions). Each row compares data from two of our four countries US, UK, Israel (IL) and Brazil (BR). Every plot includes the CCC value with 95% confidence interval. Regression lines in blue and reference lines for perfect agreement in black.</p>
 </div>
 

@@ -9,8 +9,7 @@ output:
 ```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
-                      dpi = 300, dev="jpeg", out.width = "70%", 
-                      fig.align = "center",
+                      dpi = 300, dev="jpeg", fig.width = 7,
                       tidy = TRUE)
 
 library(readr)
