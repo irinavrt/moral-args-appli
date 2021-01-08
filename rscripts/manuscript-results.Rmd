@@ -9,7 +9,8 @@ output:
 ```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
-                      dpi = 300, dev="jpeg", fig.width = 7,
+                      dpi = 300, dev="jpeg", out.width = "40%", 
+                      fig.align = "center",
                       tidy = TRUE)
 
 library(readr)
@@ -26,7 +27,7 @@ theme_set(theme_half_open(11))
 
 ```
 
-```{r data}
+```{r data, echo=FALSE}
 
 # US
 
@@ -125,7 +126,7 @@ comb_arg <- bind_rows(
 
 ```
 
-```{r functions}
+```{r functions, echo=FALSE}
 
 # estimate argument applicability within separate groups defined by group_var
 
