@@ -5,11 +5,11 @@ output:
     keep_md: yes
 ---
 
-
 ```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE,
-                      fig.width = 7.1, fig.height = 3.15,
+                      fig.width = 7.1, fig.height = 3.15, 
+                      out.width = "60%", fig.align = 'center',
                       dpi = 300, dev="jpeg", tidy = TRUE)
 
 library(readr)
@@ -528,7 +528,7 @@ uk_mf_agr_table %>%
 ```
 
 
-```{r fig.width=3.35, fig.height=2.76, fig.cap="Figure 4. Scatter plots of 1,728 argument applicability scores (8 types of arguments by 216 moral opinions), measured in different groups in the United Kingdom: women vs. men (A),  younger vs. older (B), right-wing vs. left-wing (C), and higher vs. lower education (D). Regression lines in blue and reference lines for perfect agreement in black."}
+```{r fig.width=3.35, fig.height=2.76, out.width = "40%", fig.cap="Figure 4. Scatter plots of 1,728 argument applicability scores (8 types of arguments by 216 moral opinions), measured in different groups in the United Kingdom: women vs. men (A),  younger vs. older (B), right-wing vs. left-wing (C), and higher vs. lower education (D). Regression lines in blue and reference lines for perfect agreement in black."}
 
 uk_mf_diff <- bind_rows(
   link_by_group(filter(uk_arg, polviews %in% c("Left", "Right")) %>%

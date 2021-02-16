@@ -12,7 +12,6 @@ output:
 
 
 
-
 # Study 1. US
 
 ## Method
@@ -28,7 +27,10 @@ output:
 
 ## Results
 
-![Figure 1. Boxplots showing how applicability, estimated in the entire sample of Study 1, of eight different kinds of moral arguments varied across 196 moral opinions. The box represents the interquartile (IQ) range with the dark line indicating the median. The whiskers reach the min and max values in case these are at most 1.5 times the box height outside the IQ range. Circles and stars signify outliers (values between 1.5 and 3 times the IQ range) and extreme outliers (more than 3 times the IQ range), respectively.](manuscript-results_files/figure-html/us_boxpl-1.jpeg)
+<div class="figure" style="text-align: center">
+<img src="manuscript-results_files/figure-html/us_boxpl-1.jpeg" alt="Figure 1. Boxplots showing how applicability, estimated in the entire sample of Study 1, of eight different kinds of moral arguments varied across 196 moral opinions. The box represents the interquartile (IQ) range with the dark line indicating the median. The whiskers reach the min and max values in case these are at most 1.5 times the box height outside the IQ range. Circles and stars signify outliers (values between 1.5 and 3 times the IQ range) and extreme outliers (more than 3 times the IQ range), respectively." width="60%" />
+<p class="caption">Figure 1. Boxplots showing how applicability, estimated in the entire sample of Study 1, of eight different kinds of moral arguments varied across 196 moral opinions. The box represents the interquartile (IQ) range with the dark line indicating the median. The whiskers reach the min and max values in case these are at most 1.5 times the box height outside the IQ range. Circles and stars signify outliers (values between 1.5 and 3 times the IQ range) and extreme outliers (more than 3 times the IQ range), respectively.</p>
+</div>
 
 <table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <caption>Table 2. CCC values with 95% confidence interval.</caption>
@@ -75,7 +77,10 @@ output:
 </table>
 
 
-![Figure 2. Scatter plots of 1,568 argument applicability scores (8 types of arguments by 196 moral opinions), measured in different groups in the United States: women vs. men (A),  younger vs. older (B), liberals vs. conservatives (C), higher vs. lower education (D), and higher vs. lower verbal ability (E). Regression lines in blue and reference lines for perfect agreement in black.](manuscript-results_files/figure-html/unnamed-chunk-1-1.jpeg)
+<div class="figure" style="text-align: center">
+<img src="manuscript-results_files/figure-html/unnamed-chunk-1-1.jpeg" alt="Figure 2. Scatter plots of 1,568 argument applicability scores (8 types of arguments by 196 moral opinions), measured in different groups in the United States: women vs. men (A),  younger vs. older (B), liberals vs. conservatives (C), higher vs. lower education (D), and higher vs. lower verbal ability (E). Regression lines in blue and reference lines for perfect agreement in black." width="60%" />
+<p class="caption">Figure 2. Scatter plots of 1,568 argument applicability scores (8 types of arguments by 196 moral opinions), measured in different groups in the United States: women vs. men (A),  younger vs. older (B), liberals vs. conservatives (C), higher vs. lower education (D), and higher vs. lower verbal ability (E). Regression lines in blue and reference lines for perfect agreement in black.</p>
+</div>
 
 Variance ratio between higher and lower verbal ability.
 
@@ -110,7 +115,10 @@ Variance ratio between higher and lower verbal ability.
 
 ## Results
 
-![Figure 3. Boxplots (defined in Figure 2) showing how applicability, estimated in the entire sample of Study 2, of eight different kinds of moral arguments varied across 216 moral opinions.](manuscript-results_files/figure-html/uk_boxpl-1.jpeg)
+<div class="figure" style="text-align: center">
+<img src="manuscript-results_files/figure-html/uk_boxpl-1.jpeg" alt="Figure 3. Boxplots (defined in Figure 2) showing how applicability, estimated in the entire sample of Study 2, of eight different kinds of moral arguments varied across 216 moral opinions." width="60%" />
+<p class="caption">Figure 3. Boxplots (defined in Figure 2) showing how applicability, estimated in the entire sample of Study 2, of eight different kinds of moral arguments varied across 216 moral opinions.</p>
+</div>
 
 
 <table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
@@ -152,7 +160,10 @@ Variance ratio between higher and lower verbal ability.
 </table>
 
 
-![Figure 4. Scatter plots of 1,728 argument applicability scores (8 types of arguments by 216 moral opinions), measured in different groups in the United Kingdom: women vs. men (A),  younger vs. older (B), right-wing vs. left-wing (C), and higher vs. lower education (D). Regression lines in blue and reference lines for perfect agreement in black.](manuscript-results_files/figure-html/unnamed-chunk-3-1.jpeg)
+<div class="figure" style="text-align: center">
+<img src="manuscript-results_files/figure-html/unnamed-chunk-3-1.jpeg" alt="Figure 4. Scatter plots of 1,728 argument applicability scores (8 types of arguments by 216 moral opinions), measured in different groups in the United Kingdom: women vs. men (A),  younger vs. older (B), right-wing vs. left-wing (C), and higher vs. lower education (D). Regression lines in blue and reference lines for perfect agreement in black." width="40%" />
+<p class="caption">Figure 4. Scatter plots of 1,728 argument applicability scores (8 types of arguments by 216 moral opinions), measured in different groups in the United Kingdom: women vs. men (A),  younger vs. older (B), right-wing vs. left-wing (C), and higher vs. lower education (D). Regression lines in blue and reference lines for perfect agreement in black.</p>
+</div>
 
 
 # Study 3. Combined US, UK, IL, and BR analysis 
@@ -234,7 +245,10 @@ Variance ratio between higher and lower verbal ability.
 
 
 
-![Figure 5. Scatter plots of 432 argument applicability scores for (8 types of arguments by 54 moral opinions). Each row compares data from two of our four countries US, UK, Israel (IL) and Brazil (BR). Regression lines in blue and reference lines for perfect agreement in black.](manuscript-results_files/figure-html/com_scatter-1.jpeg)
+<div class="figure" style="text-align: center">
+<img src="manuscript-results_files/figure-html/com_scatter-1.jpeg" alt="Figure 5. Scatter plots of 432 argument applicability scores for (8 types of arguments by 54 moral opinions). Each row compares data from two of our four countries US, UK, Israel (IL) and Brazil (BR). Regression lines in blue and reference lines for perfect agreement in black." width="60%" />
+<p class="caption">Figure 5. Scatter plots of 432 argument applicability scores for (8 types of arguments by 54 moral opinions). Each row compares data from two of our four countries US, UK, Israel (IL) and Brazil (BR). Regression lines in blue and reference lines for perfect agreement in black.</p>
+</div>
 
 ## Agreement on argument applicability
 
