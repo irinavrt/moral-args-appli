@@ -1,0 +1,348 @@
+---
+title: "Different populations agree on which moral arguments underlie which opinions"
+subtitle: "Supplementary Material"
+output:
+  html_document:
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE,
+                      dpi = 300, dev="jpeg", fig.width = 180/25.4,
+                      tidy = TRUE)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(forcats)
+library(purrr)
+library(kableExtra)
+library(ggplot2)
+library(broom)
+
+theme_set(cowplot::theme_cowplot(10))
+
+gss_items <- read_csv("../data/gss-items.csv") 
+bsa_items <- read_csv("../data/bsa-items.csv") 
+common_items <- read_csv("../data/gss-and-bsa-common-items.csv")
+
+us_arg <- read_csv("../data/us-argument-data-clean.csv")
+
+us_arg <- us_arg %>% 
+  mutate(
+    sex = fct_relevel(sex, "male"),
+    age_gr = cut(age, 
+                 breaks = c(0, median(age, na.rm = TRUE), 100), 
+                 labels = c("Younger", "Older")),
+    verb_ability = ifelse(wordsum > median(wordsum, na.rm = TRUE),
+                          "Higher",
+                          "Lower"),
+    verb_ability = fct_relevel(verb_ability, "Lower"),
+    edu = fct_collapse(edu, 
+                       Lower = "<bach", 
+                       Higher = c("bach", "grad")),
+   position = paste0(issue, "_", type),
+   mf = factor(mf, levels = c("Harm", "Fairness", "Liberty", "Violence",
+                            "Authority", "Purity", "Ingroup", "Government"))
+  )
+
+uk_arg <- read_csv("../data/uk-argument-data-clean.csv")
+
+uk_arg <- uk_arg %>% 
+  mutate(
+    age_gr = cut(age, 
+                 breaks = c(0, median(age, na.rm = TRUE), 100), 
+                 labels = c("Younger", "Older")),
+    polviews = cut(polviews_10, 
+                   breaks = c(0, 3, 6, 10),
+                   include.lowest = TRUE,
+                   labels = c("Left", "Moderate", "Right")),
+    position = paste0(issue, "_", type)
+  ) 
+
+
+```
+
+## Supplementary Tables
+
+**Supplementary Table 1.** The list of 98 GSS moral items.
+
+```{r table1}
+
+gss_items %>% 
+  kbl() %>% 
+    kable_classic() 
+
+```
+
+
+**Supplementary Table 2.** The list of 108 BSA moral items.
+
+```{r table2}
+
+bsa_items %>% 
+  kbl() %>% 
+    kable_classic() 
+
+```
+
+
+**Supplementary Table 3.** Matching items identified in the GSS and BSA. An asterisk (*) indicates that the issue positions were reverse coded in the UK version to match the US version.
+
+```{r table3}
+
+common_items %>% 
+  mutate(bsa_text = ifelse(reverse == 1, 
+                           paste0(bsa_text, "*"),
+                           bsa_text)) %>% 
+  select(gss_text, bsa_text) %>% 
+  kbl(col.names = c("General Social Survey items",
+                    "British Social Attitudes items")) %>% 
+    kable_classic() 
+
+
+```
+
+
+## Supplementary Analysis
+
+In this section, we use logistic regression to explore the marginal effects of individual characteristics controlling for rater’s own opinion as well their interactions. Supporting main analysis, the results show that strong effects of individual characteristics are rare and mostly within what would be expected by chance (see Supplementary Figures 1-4. While we present the results for interaction only between ideology and sex, similar results were obtained for interaction between ideology and other individual characteristics). 
+
+## Supplementary Figures
+
+
+```{r glm_mod, cache = TRUE}
+
+by_pos_mf <- us_arg %>% 
+  group_by(position, mf) %>% 
+  nest()
+
+fit_glm <- function(data) {
+  glm(value ~ sex + age_gr + polviews + edu + verb_ability + opinion, 
+      family = binomial(),
+      data)
+}
+
+by_pos_mf <- by_pos_mf %>% 
+  mutate(mod = map(data, possibly(fit_glm, NULL)))
+
+by_pos_mf <- by_pos_mf %>% 
+  mutate(mod_sex_int = map2(mod, data, ~possibly(update, NULL)(.x, data = .y, . ~ . + sex:polviews)),
+         mod_opin_int = map2(mod, data, ~possibly(update, NULL)(.x, data = .y, . ~ . + opinion:polviews)))
+
+
+```
+
+```{r fig1, fig.width=180/25.4, fig.asp=0.7, fig.cap="Supplementary Figure 1. Distributions of Z-scores for the effect of sex, age, ideology, education, verbal ability, and agreement with the opinion on the probability to find each of the eight kinds of argument applicable to each of the 196 GSS opinions in the US sample. For comparison, the black line shows the standard normal distribution. The vertical grey lines separate coefficients that are above or below zero by at least two standard errors. Note: The y-axis scale is cut at 0.5 for better visibility. The zero effect can spike up until 2 for violence applicability."}
+
+glm_coef <- by_pos_mf %>% 
+  mutate(coef = map(mod, tidy)) %>% 
+  select(-data, -mod) %>% 
+  unnest(coef)
+
+glm_coef %>% 
+  filter(term != "(Intercept)") %>% 
+  mutate(term = factor(term, 
+                       levels = unique(term),
+                       labels = c("Female", "Older", "Liberal",
+                                  "Higher\neducation",
+                                  "Higher\nverb. ab.", 
+                                  "Agree"))) %>%
+  ggplot(aes(statistic)) +
+  geom_histogram(aes(y = after_stat(density))) +
+  geom_vline(xintercept = c(-2, 2), color = "grey50") +
+  stat_function(fun = dnorm,  
+                args = list(mean = 0, sd = 1)) +
+  facet_grid(term ~ mf) +
+  coord_cartesian(ylim = c(0, .5), xlim = c(-3.5, 3.5))+
+  scale_y_continuous(breaks = c(0, .2, .4)) +
+  xlab("z-score")
+
+```
+
+
+```{r fig2, fig.width=180/25.4, fig.asp=0.8, fig.cap="Supplementary Figure 2. The same as Suplementarty Figure 1, but also inculdes estimates of the interaction between gender and ideology."}
+
+glm_coef_sex_int <- by_pos_mf %>% 
+  mutate(coef = map(mod_sex_int, tidy)) %>% 
+  select(-data, -mod) %>% 
+  unnest(coef)
+
+glm_coef_sex_int %>% 
+  filter(term != "(Intercept)") %>% 
+  mutate(term = factor(term, 
+                       levels = unique(term),
+                       labels = c("Female", "Older", "Liberal",
+                                  "Higher\neducation",
+                                  "Higher\nverb. ab.",
+                                  "Agree",
+                                  "Female x\nLiberal"))) %>%
+  ggplot(aes(statistic)) +
+  geom_histogram(aes(y = after_stat(density))) +
+  geom_vline(xintercept = c(-2, 2), color = "grey50") +
+  stat_function(fun = dnorm,  
+                args = list(mean = 0, sd = 1)) +
+  facet_grid(term~mf) +
+  coord_cartesian(ylim = c(0, .5), xlim = c(-3.5, 3.5))+
+  scale_y_continuous(breaks = c(0, .2, .4)) + 
+  xlab("z-score")
+
+```
+
+```{r fig3, eval = FALSE, fig.width=180/25.4, fig.asp=0.8, fig.cap="Supplementary Figure 2"}
+
+glm_coef_opin_int <- by_pos_mf %>% 
+  mutate(coef = map(mod_opin_int, tidy)) %>% 
+  select(-data, -mod) %>% 
+  unnest(coef)
+
+glm_coef_opin_int %>% 
+  filter(term != "(Intercept)") %>% 
+  mutate(term = factor(term, 
+                       levels = unique(term),
+                       labels = c("Female", "Older", "Liberal",
+                                  "Higher\neducation",
+                                  "Higher\nverb. ab.", 
+                                  "Agree",
+                                  "Agree x\nLiberal"))) %>%
+  ggplot(aes(statistic)) +
+  geom_histogram(aes(y = after_stat(density))) +
+  geom_vline(xintercept = c(-2, 2), color = "grey50") +
+  stat_function(fun = dnorm,  
+                args = list(mean = 0, sd = 1)) +
+  facet_grid(term~mf) +
+  coord_cartesian(ylim = c(0, .5), xlim = c(-3.5, 3.5)) +
+  scale_y_continuous(breaks = c(0, .2, .4)) +   xlab("z-score")
+
+```
+
+```{r fig4, eval=FALSE, fig.width=180/25.4, fig.asp=0.8, fig.cap="Supplementary Figure 2"}
+
+glm_coef_verb_int <- by_pos_mf %>% 
+  mutate(coef = map(mod_verb_int, tidy)) %>% 
+  select(-data, -mod) %>% 
+  unnest(coef)
+
+glm_coef_verb_int %>% 
+  filter(term != "(Intercept)") %>% 
+  mutate(term = factor(term, 
+                       levels = unique(term),
+                       labels = c("Female", "Older", "Liberal",
+                                  "Higher\neducation",
+                                  "Higher\nverb. ab.", 
+                                  "Higher\nverb.ab.x\nLiberal"))) %>%
+  ggplot(aes(statistic)) +
+  geom_histogram(aes(y = after_stat(density))) +
+  geom_vline(xintercept = c(-2, 2), color = "grey50") +
+  stat_function(fun = dnorm,  
+                args = list(mean = 0, sd = 1)) +
+  facet_grid(term~mf) +
+  coord_cartesian(ylim = c(0, .5), xlim = c(-3.5, 3.5))+
+  scale_y_continuous(breaks = c(0, .2, .4)) +   xlab("z-score")
+
+```
+
+```{r uk_mod, cache = TRUE}
+
+uk_by_pos_mf <- uk_arg %>% 
+  mutate(polviews = fct_rev(polviews),
+         sex = fct_relevel(sex, "Male")) %>% 
+  group_by(position, mf) %>% 
+  nest()
+
+fit_glm <- function(data) {
+  glm(value ~ sex + age_gr + polviews + edu + opinion,
+      family = binomial(),
+      data)
+}
+
+uk_by_pos_mf <- uk_by_pos_mf %>% 
+  mutate(mod = map(data, possibly(fit_glm, NULL)))
+
+uk_by_pos_mf <- uk_by_pos_mf %>% 
+  mutate(mod_sex_int = map2(mod, data, ~possibly(update, NULL)(.x, data = .y, . ~ . + sex:polviews)),
+         mod_opin_int = map2(mod, data, ~possibly(update, NULL)(.x, data = .y, . ~ . + opinion:polviews)))
+
+```
+
+```{r fig5, fig.width=180/25.4, fig.asp=0.6, fig.cap="Supplementary Figure 3. Distributions of Z-scores for the effect of sex, age, ideology, education, and agreement with the opinion on the probability to find each of the eight kinds of argument applicable to each of the 216 BSA opinions in the UK sample. For comparison, the black line shows the standard normal distribution. The vertical grey lines separate coefficients that are above or below zero by at least two standard errors. Note: The y-axis scale is cut at 0.5 for better visibility. The zero effect can spike up until 2 for violence applicability."}
+
+uk_by_pos_mf <- uk_by_pos_mf  %>% 
+  ungroup() %>% 
+  mutate(mf = factor(mf, levels = c("Harm", "Fairness", "Liberty", "Violence",
+                            "Authority", "Purity", "Ingroup", "Government")))
+
+glm_coef <- uk_by_pos_mf %>% 
+  mutate(coef = map(mod, tidy)) %>% 
+  select(-data, -mod) %>% 
+  unnest(coef)
+
+glm_coef %>% 
+  filter(term != "(Intercept)") %>% 
+  mutate(term = factor(term, 
+                       levels = unique(term),
+                       labels = c("Female", "Older", "Moderate", "Left",
+                                  "Higher\neducation", "Agree"))) %>%
+  ggplot(aes(statistic)) +
+  geom_histogram(aes(y = after_stat(density))) +
+  geom_vline(xintercept = c(-2, 2), color = "grey50") +
+  stat_function(fun = dnorm,  
+                args = list(mean = 0, sd = 1)) +
+  facet_grid(term~mf) +
+  coord_cartesian(ylim = c(0, .5), xlim = c(-3.5, 3.5))+
+  scale_y_continuous(breaks = c(0, .2, .4)) +   xlab("z-score")
+
+
+```
+
+
+```{r fig6, fig.width=180/25.4, fig.asp=0.8, fig.cap="Supplementary Figure 4. The same as Suplementarty Figure 3, but also inculdes estimates of the interaction between gender and ideology. "}
+
+glm_coef_sex_int <- uk_by_pos_mf %>% 
+  mutate(coef = map(mod_sex_int, tidy)) %>% 
+  select(-data, -mod) %>% 
+  unnest(coef)
+
+glm_coef_sex_int %>% 
+  filter(term != "(Intercept)") %>% 
+  mutate(term = factor(term, 
+                       levels = unique(term),
+                       labels = c("Female", "Older", "Moderate", "Left",
+                                  "Higher\neducation", "Agree",
+                                  "Female x\nModerate", "Female x\nLeft"))) %>%
+  ggplot(aes(statistic)) +
+  geom_histogram(aes(y = after_stat(density))) +
+  geom_vline(xintercept = c(-2, 2), color = "grey50") +
+  stat_function(fun = dnorm,  
+                args = list(mean = 0, sd = 1)) +
+  facet_grid(term~mf) +
+  coord_cartesian(ylim = c(0, .5), xlim = c(-3.5, 3.5))+
+  scale_y_continuous(breaks = c(0, .2, .4)) +   xlab("z-score")
+
+```
+
+```{r fig7, eval = FALSE, fig.width=180/25.4, fig.asp=0.8, fig.cap="Supplementary Figure 2"}
+
+glm_coef_opin_int <- uk_by_pos_mf %>% 
+  mutate(coef = map(mod_opin_int, tidy)) %>% 
+  select(-data, -mod) %>% 
+  unnest(coef)
+
+glm_coef_opin_int %>% 
+  filter(term != "(Intercept)") %>% 
+  mutate(term = factor(term, 
+                       levels = unique(term),
+                       labels = c("Female", "Older", "Moderate", "Left",
+                                  "Higher\neducation", "Agree",
+                                  "Agree x\nModerate", "Agree x\nLeft"))) %>%
+  ggplot(aes(statistic)) +
+  geom_histogram(aes(y = after_stat(density))) +
+  geom_vline(xintercept = c(-2, 2), color = "grey50") +
+  stat_function(fun = dnorm,  
+                args = list(mean = 0, sd = 1)) +
+  facet_grid(term~mf) +
+  coord_cartesian(ylim = c(0, .5), xlim = c(-3.5, 3.5)) +
+  scale_y_continuous(breaks = c(0, .2, .4)) +   xlab("z-score")
+
+```
+
