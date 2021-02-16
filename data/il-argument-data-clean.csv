@@ -364,7 +364,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 153,28,Female,7,6,marlegit,against,0,Harm,0
 18,24,Female,4,5,twoincs1,against,0,Harm,0
 65,26,Male,3,5,twoincs1,against,0,Harm,0
-125,28,NA,8,7,twoincs1,against,0,Harm,0
+125,28,Do not wish to disclose,8,7,twoincs1,against,0,Harm,0
 182,26,Male,7,2,twoincs1,against,0,Harm,0
 164,33,Male,8,6,twoincs1,against,0,Harm,0
 107,29,Male,7,6,twoincs1,against,0,Harm,0
@@ -1140,7 +1140,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 152,27,Female,7,7,ifwrong,against,0,Harm,0
 21,54,Male,8,3,ifwrong,against,0,Harm,0
 39,50,Female,10,8,wrldgovt,against,0,Harm,0
-125,28,NA,8,7,wrldgovt,against,0,Harm,0
+125,28,Do not wish to disclose,8,7,wrldgovt,against,0,Harm,0
 192,17,Male,2,6,wrldgovt,against,0,Harm,0
 25,22,Female,3,4,wrldgovt,against,0,Harm,0
 122,38,Male,7,8,wrldgovt,against,0,Harm,0
@@ -1950,7 +1950,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 216,24,Female,8,8,ifwrong,against,1,Harm,1
 138,29,Male,7,7,ifwrong,against,1,Harm,1
 222,24,Male,3,7,wrldgovt,against,1,Harm,0
-125,28,NA,8,7,amownway,against,1,Harm,0
+125,28,Do not wish to disclose,8,7,amownway,against,1,Harm,0
 43,35,Female,4,5,amownway,against,1,Harm,1
 190,19,Male,4,3,amtv,against,1,Harm,1
 129,36,Male,3,4,abpoor,against,1,Harm,0
@@ -2205,7 +2205,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 161,41,Female,7,4,abpoorw,against,1,Harm,0
 168,20,Female,7,5,abpoorw,against,1,Harm,0
 32,21,Male,3,3,abpoorw,against,1,Harm,1
-125,28,NA,8,7,ifwrong,against,1,Harm,0
+125,28,Do not wish to disclose,8,7,ifwrong,against,1,Harm,0
 83,36,Male,7,8,ifwrong,against,1,Harm,1
 25,22,Female,3,4,ifwrong,against,1,Harm,0
 54,30,Female,8,0,ifwrong,against,1,Harm,0
@@ -2520,7 +2520,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 144,55,Female,8,10,suicide1,against,1,Harm,0
 34,37,Male,7,8,xmarsex,against,1,Harm,0
 78,30,Male,8,3,xmarsex,against,1,Harm,0
-125,28,NA,8,7,xmarsex,against,1,Harm,0
+125,28,Do not wish to disclose,8,7,xmarsex,against,1,Harm,0
 26,19,Male,3,4,xmarsex,against,1,Harm,0
 56,30,Female,7,9,xmarsex,against,1,Harm,0
 191,27,Female,3,5,xmarsex,against,1,Harm,0
@@ -2874,7 +2874,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 49,29,Female,3,2,abpoorw,pro,0,Harm,0
 217,23,Female,4,3,abpoorw,pro,0,Harm,1
 137,25,Female,7,6,abpoorw,pro,0,Harm,0
-125,28,NA,8,7,ifwrong,pro,0,Harm,0
+125,28,Do not wish to disclose,8,7,ifwrong,pro,0,Harm,0
 22,42,Female,10,5,ifwrong,pro,0,Harm,0
 107,29,Male,7,6,ifwrong,pro,0,Harm,0
 67,25,Female,3,5,ifwrong,pro,0,Harm,0
@@ -3002,7 +3002,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 133,23,Female,3,4,ifwrong,pro,0,Harm,0
 138,29,Male,7,7,ifwrong,pro,0,Harm,0
 114,37,Female,8,3,ifwrong,pro,0,Harm,0
-125,28,NA,8,7,amownway,pro,0,Harm,0
+125,28,Do not wish to disclose,8,7,amownway,pro,0,Harm,0
 120,27,Female,7,5,amownway,pro,0,Harm,0
 79,25,Male,7,6,forland,pro,0,Harm,0
 29,22,Male,3,4,forland,pro,0,Harm,0
@@ -3667,7 +3667,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 191,27,Female,3,5,amtv,pro,0,Harm,0
 154,28,Male,4,2,amtv,pro,0,Harm,0
 136,25,Male,3,8,abdefect,pro,0,Harm,1
-125,28,NA,8,7,xmarsex,pro,0,Harm,1
+125,28,Do not wish to disclose,8,7,xmarsex,pro,0,Harm,1
 48,23,Female,3,7,homosex,pro,0,Harm,1
 132,26,Female,7,7,marlegit,pro,0,Harm,1
 18,24,Female,4,5,abdefctw,pro,0,Harm,1
@@ -4725,7 +4725,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 180,36,Male,7,2,libmil,pro,1,Harm,0
 67,25,Female,3,5,obeylaw,pro,1,Harm,1
 45,32,Female,8,5,obeylaw,pro,1,Harm,1
-125,28,NA,8,7,twoincs1,pro,1,Harm,0
+125,28,Do not wish to disclose,8,7,twoincs1,pro,1,Harm,0
 26,19,Male,3,4,twoincs1,pro,1,Harm,0
 193,21,Male,3,5,twoincs1,pro,1,Harm,0
 75,31,Female,7,3,twoincs1,pro,1,Harm,0
@@ -5120,7 +5120,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 149,24,Male,3,7,libmil,pro,1,Harm,0
 29,22,Male,3,4,obeylaw,pro,1,Harm,0
 105,26,Male,7,8,marlegit,pro,1,Harm,1
-125,28,NA,8,7,wrldgovt,pro,1,Harm,0
+125,28,Do not wish to disclose,8,7,wrldgovt,pro,1,Harm,0
 14,27,Female,7,6,wrldgovt,pro,1,Harm,0
 61,20,Male,7,8,wrldgovt,pro,1,Harm,0
 15,22,Male,3,4,wrldgovt,pro,1,Harm,0
@@ -5812,7 +5812,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 153,28,Female,7,6,marlegit,against,0,Authority,1
 18,24,Female,4,5,twoincs1,against,0,Authority,1
 65,26,Male,3,5,twoincs1,against,0,Authority,1
-125,28,NA,8,7,twoincs1,against,0,Authority,1
+125,28,Do not wish to disclose,8,7,twoincs1,against,0,Authority,1
 182,26,Male,7,2,twoincs1,against,0,Authority,1
 164,33,Male,8,6,twoincs1,against,0,Authority,1
 107,29,Male,7,6,twoincs1,against,0,Authority,1
@@ -6588,7 +6588,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 152,27,Female,7,7,ifwrong,against,0,Authority,0
 21,54,Male,8,3,ifwrong,against,0,Authority,0
 39,50,Female,10,8,wrldgovt,against,0,Authority,0
-125,28,NA,8,7,wrldgovt,against,0,Authority,0
+125,28,Do not wish to disclose,8,7,wrldgovt,against,0,Authority,0
 192,17,Male,2,6,wrldgovt,against,0,Authority,0
 25,22,Female,3,4,wrldgovt,against,0,Authority,0
 122,38,Male,7,8,wrldgovt,against,0,Authority,0
@@ -7398,7 +7398,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 216,24,Female,8,8,ifwrong,against,1,Authority,0
 138,29,Male,7,7,ifwrong,against,1,Authority,0
 222,24,Male,3,7,wrldgovt,against,1,Authority,0
-125,28,NA,8,7,amownway,against,1,Authority,0
+125,28,Do not wish to disclose,8,7,amownway,against,1,Authority,0
 43,35,Female,4,5,amownway,against,1,Authority,0
 190,19,Male,4,3,amtv,against,1,Authority,0
 129,36,Male,3,4,abpoor,against,1,Authority,0
@@ -7653,7 +7653,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 161,41,Female,7,4,abpoorw,against,1,Authority,0
 168,20,Female,7,5,abpoorw,against,1,Authority,0
 32,21,Male,3,3,abpoorw,against,1,Authority,0
-125,28,NA,8,7,ifwrong,against,1,Authority,0
+125,28,Do not wish to disclose,8,7,ifwrong,against,1,Authority,0
 83,36,Male,7,8,ifwrong,against,1,Authority,0
 25,22,Female,3,4,ifwrong,against,1,Authority,0
 54,30,Female,8,0,ifwrong,against,1,Authority,0
@@ -7968,7 +7968,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 144,55,Female,8,10,suicide1,against,1,Authority,0
 34,37,Male,7,8,xmarsex,against,1,Authority,0
 78,30,Male,8,3,xmarsex,against,1,Authority,0
-125,28,NA,8,7,xmarsex,against,1,Authority,0
+125,28,Do not wish to disclose,8,7,xmarsex,against,1,Authority,0
 26,19,Male,3,4,xmarsex,against,1,Authority,0
 56,30,Female,7,9,xmarsex,against,1,Authority,0
 191,27,Female,3,5,xmarsex,against,1,Authority,0
@@ -8322,7 +8322,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 49,29,Female,3,2,abpoorw,pro,0,Authority,1
 217,23,Female,4,3,abpoorw,pro,0,Authority,1
 137,25,Female,7,6,abpoorw,pro,0,Authority,1
-125,28,NA,8,7,ifwrong,pro,0,Authority,1
+125,28,Do not wish to disclose,8,7,ifwrong,pro,0,Authority,1
 22,42,Female,10,5,ifwrong,pro,0,Authority,1
 107,29,Male,7,6,ifwrong,pro,0,Authority,1
 67,25,Female,3,5,ifwrong,pro,0,Authority,1
@@ -8450,7 +8450,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 133,23,Female,3,4,ifwrong,pro,0,Authority,1
 138,29,Male,7,7,ifwrong,pro,0,Authority,1
 114,37,Female,8,3,ifwrong,pro,0,Authority,1
-125,28,NA,8,7,amownway,pro,0,Authority,1
+125,28,Do not wish to disclose,8,7,amownway,pro,0,Authority,1
 120,27,Female,7,5,amownway,pro,0,Authority,1
 79,25,Male,7,6,forland,pro,0,Authority,1
 29,22,Male,3,4,forland,pro,0,Authority,1
@@ -9115,7 +9115,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 191,27,Female,3,5,amtv,pro,0,Authority,0
 154,28,Male,4,2,amtv,pro,0,Authority,0
 136,25,Male,3,8,abdefect,pro,0,Authority,0
-125,28,NA,8,7,xmarsex,pro,0,Authority,0
+125,28,Do not wish to disclose,8,7,xmarsex,pro,0,Authority,0
 48,23,Female,3,7,homosex,pro,0,Authority,0
 132,26,Female,7,7,marlegit,pro,0,Authority,0
 18,24,Female,4,5,abdefctw,pro,0,Authority,0
@@ -10173,7 +10173,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 180,36,Male,7,2,libmil,pro,1,Authority,0
 67,25,Female,3,5,obeylaw,pro,1,Authority,0
 45,32,Female,8,5,obeylaw,pro,1,Authority,0
-125,28,NA,8,7,twoincs1,pro,1,Authority,0
+125,28,Do not wish to disclose,8,7,twoincs1,pro,1,Authority,0
 26,19,Male,3,4,twoincs1,pro,1,Authority,0
 193,21,Male,3,5,twoincs1,pro,1,Authority,0
 75,31,Female,7,3,twoincs1,pro,1,Authority,0
@@ -10568,7 +10568,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 149,24,Male,3,7,libmil,pro,1,Authority,0
 29,22,Male,3,4,obeylaw,pro,1,Authority,0
 105,26,Male,7,8,marlegit,pro,1,Authority,0
-125,28,NA,8,7,wrldgovt,pro,1,Authority,0
+125,28,Do not wish to disclose,8,7,wrldgovt,pro,1,Authority,0
 14,27,Female,7,6,wrldgovt,pro,1,Authority,0
 61,20,Male,7,8,wrldgovt,pro,1,Authority,0
 15,22,Male,3,4,wrldgovt,pro,1,Authority,0
@@ -11260,7 +11260,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 153,28,Female,7,6,marlegit,against,0,Purity,0
 18,24,Female,4,5,twoincs1,against,0,Purity,0
 65,26,Male,3,5,twoincs1,against,0,Purity,0
-125,28,NA,8,7,twoincs1,against,0,Purity,1
+125,28,Do not wish to disclose,8,7,twoincs1,against,0,Purity,1
 182,26,Male,7,2,twoincs1,against,0,Purity,1
 164,33,Male,8,6,twoincs1,against,0,Purity,0
 107,29,Male,7,6,twoincs1,against,0,Purity,0
@@ -12036,7 +12036,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 152,27,Female,7,7,ifwrong,against,0,Purity,0
 21,54,Male,8,3,ifwrong,against,0,Purity,0
 39,50,Female,10,8,wrldgovt,against,0,Purity,0
-125,28,NA,8,7,wrldgovt,against,0,Purity,0
+125,28,Do not wish to disclose,8,7,wrldgovt,against,0,Purity,0
 192,17,Male,2,6,wrldgovt,against,0,Purity,0
 25,22,Female,3,4,wrldgovt,against,0,Purity,0
 122,38,Male,7,8,wrldgovt,against,0,Purity,0
@@ -12846,7 +12846,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 216,24,Female,8,8,ifwrong,against,1,Purity,1
 138,29,Male,7,7,ifwrong,against,1,Purity,1
 222,24,Male,3,7,wrldgovt,against,1,Purity,1
-125,28,NA,8,7,amownway,against,1,Purity,1
+125,28,Do not wish to disclose,8,7,amownway,against,1,Purity,1
 43,35,Female,4,5,amownway,against,1,Purity,1
 190,19,Male,4,3,amtv,against,1,Purity,1
 129,36,Male,3,4,abpoor,against,1,Purity,1
@@ -13101,7 +13101,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 161,41,Female,7,4,abpoorw,against,1,Purity,0
 168,20,Female,7,5,abpoorw,against,1,Purity,0
 32,21,Male,3,3,abpoorw,against,1,Purity,0
-125,28,NA,8,7,ifwrong,against,1,Purity,0
+125,28,Do not wish to disclose,8,7,ifwrong,against,1,Purity,0
 83,36,Male,7,8,ifwrong,against,1,Purity,0
 25,22,Female,3,4,ifwrong,against,1,Purity,0
 54,30,Female,8,0,ifwrong,against,1,Purity,0
@@ -13416,7 +13416,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 144,55,Female,8,10,suicide1,against,1,Purity,0
 34,37,Male,7,8,xmarsex,against,1,Purity,0
 78,30,Male,8,3,xmarsex,against,1,Purity,0
-125,28,NA,8,7,xmarsex,against,1,Purity,0
+125,28,Do not wish to disclose,8,7,xmarsex,against,1,Purity,0
 26,19,Male,3,4,xmarsex,against,1,Purity,0
 56,30,Female,7,9,xmarsex,against,1,Purity,0
 191,27,Female,3,5,xmarsex,against,1,Purity,0
@@ -13770,7 +13770,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 49,29,Female,3,2,abpoorw,pro,0,Purity,0
 217,23,Female,4,3,abpoorw,pro,0,Purity,1
 137,25,Female,7,6,abpoorw,pro,0,Purity,0
-125,28,NA,8,7,ifwrong,pro,0,Purity,0
+125,28,Do not wish to disclose,8,7,ifwrong,pro,0,Purity,0
 22,42,Female,10,5,ifwrong,pro,0,Purity,0
 107,29,Male,7,6,ifwrong,pro,0,Purity,1
 67,25,Female,3,5,ifwrong,pro,0,Purity,1
@@ -13898,7 +13898,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 133,23,Female,3,4,ifwrong,pro,0,Purity,0
 138,29,Male,7,7,ifwrong,pro,0,Purity,0
 114,37,Female,8,3,ifwrong,pro,0,Purity,0
-125,28,NA,8,7,amownway,pro,0,Purity,0
+125,28,Do not wish to disclose,8,7,amownway,pro,0,Purity,0
 120,27,Female,7,5,amownway,pro,0,Purity,0
 79,25,Male,7,6,forland,pro,0,Purity,1
 29,22,Male,3,4,forland,pro,0,Purity,0
@@ -14563,7 +14563,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 191,27,Female,3,5,amtv,pro,0,Purity,0
 154,28,Male,4,2,amtv,pro,0,Purity,0
 136,25,Male,3,8,abdefect,pro,0,Purity,0
-125,28,NA,8,7,xmarsex,pro,0,Purity,0
+125,28,Do not wish to disclose,8,7,xmarsex,pro,0,Purity,0
 48,23,Female,3,7,homosex,pro,0,Purity,0
 132,26,Female,7,7,marlegit,pro,0,Purity,0
 18,24,Female,4,5,abdefctw,pro,0,Purity,0
@@ -15621,7 +15621,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 180,36,Male,7,2,libmil,pro,1,Purity,0
 67,25,Female,3,5,obeylaw,pro,1,Purity,0
 45,32,Female,8,5,obeylaw,pro,1,Purity,0
-125,28,NA,8,7,twoincs1,pro,1,Purity,0
+125,28,Do not wish to disclose,8,7,twoincs1,pro,1,Purity,0
 26,19,Male,3,4,twoincs1,pro,1,Purity,0
 193,21,Male,3,5,twoincs1,pro,1,Purity,0
 75,31,Female,7,3,twoincs1,pro,1,Purity,0
@@ -16016,7 +16016,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 149,24,Male,3,7,libmil,pro,1,Purity,0
 29,22,Male,3,4,obeylaw,pro,1,Purity,0
 105,26,Male,7,8,marlegit,pro,1,Purity,0
-125,28,NA,8,7,wrldgovt,pro,1,Purity,0
+125,28,Do not wish to disclose,8,7,wrldgovt,pro,1,Purity,0
 14,27,Female,7,6,wrldgovt,pro,1,Purity,0
 61,20,Male,7,8,wrldgovt,pro,1,Purity,0
 15,22,Male,3,4,wrldgovt,pro,1,Purity,0
@@ -16708,7 +16708,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 153,28,Female,7,6,marlegit,against,0,Liberty,0
 18,24,Female,4,5,twoincs1,against,0,Liberty,0
 65,26,Male,3,5,twoincs1,against,0,Liberty,1
-125,28,NA,8,7,twoincs1,against,0,Liberty,0
+125,28,Do not wish to disclose,8,7,twoincs1,against,0,Liberty,0
 182,26,Male,7,2,twoincs1,against,0,Liberty,1
 164,33,Male,8,6,twoincs1,against,0,Liberty,1
 107,29,Male,7,6,twoincs1,against,0,Liberty,1
@@ -17484,7 +17484,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 152,27,Female,7,7,ifwrong,against,0,Liberty,1
 21,54,Male,8,3,ifwrong,against,0,Liberty,1
 39,50,Female,10,8,wrldgovt,against,0,Liberty,1
-125,28,NA,8,7,wrldgovt,against,0,Liberty,1
+125,28,Do not wish to disclose,8,7,wrldgovt,against,0,Liberty,1
 192,17,Male,2,6,wrldgovt,against,0,Liberty,1
 25,22,Female,3,4,wrldgovt,against,0,Liberty,1
 122,38,Male,7,8,wrldgovt,against,0,Liberty,1
@@ -18294,7 +18294,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 216,24,Female,8,8,ifwrong,against,1,Liberty,0
 138,29,Male,7,7,ifwrong,against,1,Liberty,0
 222,24,Male,3,7,wrldgovt,against,1,Liberty,1
-125,28,NA,8,7,amownway,against,1,Liberty,0
+125,28,Do not wish to disclose,8,7,amownway,against,1,Liberty,0
 43,35,Female,4,5,amownway,against,1,Liberty,0
 190,19,Male,4,3,amtv,against,1,Liberty,0
 129,36,Male,3,4,abpoor,against,1,Liberty,0
@@ -18549,7 +18549,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 161,41,Female,7,4,abpoorw,against,1,Liberty,1
 168,20,Female,7,5,abpoorw,against,1,Liberty,1
 32,21,Male,3,3,abpoorw,against,1,Liberty,1
-125,28,NA,8,7,ifwrong,against,1,Liberty,1
+125,28,Do not wish to disclose,8,7,ifwrong,against,1,Liberty,1
 83,36,Male,7,8,ifwrong,against,1,Liberty,1
 25,22,Female,3,4,ifwrong,against,1,Liberty,1
 54,30,Female,8,0,ifwrong,against,1,Liberty,1
@@ -18864,7 +18864,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 144,55,Female,8,10,suicide1,against,1,Liberty,0
 34,37,Male,7,8,xmarsex,against,1,Liberty,0
 78,30,Male,8,3,xmarsex,against,1,Liberty,0
-125,28,NA,8,7,xmarsex,against,1,Liberty,0
+125,28,Do not wish to disclose,8,7,xmarsex,against,1,Liberty,0
 26,19,Male,3,4,xmarsex,against,1,Liberty,0
 56,30,Female,7,9,xmarsex,against,1,Liberty,0
 191,27,Female,3,5,xmarsex,against,1,Liberty,0
@@ -19218,7 +19218,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 49,29,Female,3,2,abpoorw,pro,0,Liberty,0
 217,23,Female,4,3,abpoorw,pro,0,Liberty,0
 137,25,Female,7,6,abpoorw,pro,0,Liberty,0
-125,28,NA,8,7,ifwrong,pro,0,Liberty,0
+125,28,Do not wish to disclose,8,7,ifwrong,pro,0,Liberty,0
 22,42,Female,10,5,ifwrong,pro,0,Liberty,0
 107,29,Male,7,6,ifwrong,pro,0,Liberty,0
 67,25,Female,3,5,ifwrong,pro,0,Liberty,0
@@ -19346,7 +19346,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 133,23,Female,3,4,ifwrong,pro,0,Liberty,0
 138,29,Male,7,7,ifwrong,pro,0,Liberty,0
 114,37,Female,8,3,ifwrong,pro,0,Liberty,0
-125,28,NA,8,7,amownway,pro,0,Liberty,0
+125,28,Do not wish to disclose,8,7,amownway,pro,0,Liberty,0
 120,27,Female,7,5,amownway,pro,0,Liberty,0
 79,25,Male,7,6,forland,pro,0,Liberty,0
 29,22,Male,3,4,forland,pro,0,Liberty,0
@@ -20011,7 +20011,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 191,27,Female,3,5,amtv,pro,0,Liberty,0
 154,28,Male,4,2,amtv,pro,0,Liberty,0
 136,25,Male,3,8,abdefect,pro,0,Liberty,0
-125,28,NA,8,7,xmarsex,pro,0,Liberty,0
+125,28,Do not wish to disclose,8,7,xmarsex,pro,0,Liberty,0
 48,23,Female,3,7,homosex,pro,0,Liberty,0
 132,26,Female,7,7,marlegit,pro,0,Liberty,0
 18,24,Female,4,5,abdefctw,pro,0,Liberty,0
@@ -21069,7 +21069,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 180,36,Male,7,2,libmil,pro,1,Liberty,1
 67,25,Female,3,5,obeylaw,pro,1,Liberty,1
 45,32,Female,8,5,obeylaw,pro,1,Liberty,1
-125,28,NA,8,7,twoincs1,pro,1,Liberty,1
+125,28,Do not wish to disclose,8,7,twoincs1,pro,1,Liberty,1
 26,19,Male,3,4,twoincs1,pro,1,Liberty,1
 193,21,Male,3,5,twoincs1,pro,1,Liberty,1
 75,31,Female,7,3,twoincs1,pro,1,Liberty,1
@@ -21464,7 +21464,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 149,24,Male,3,7,libmil,pro,1,Liberty,0
 29,22,Male,3,4,obeylaw,pro,1,Liberty,0
 105,26,Male,7,8,marlegit,pro,1,Liberty,0
-125,28,NA,8,7,wrldgovt,pro,1,Liberty,0
+125,28,Do not wish to disclose,8,7,wrldgovt,pro,1,Liberty,0
 14,27,Female,7,6,wrldgovt,pro,1,Liberty,0
 61,20,Male,7,8,wrldgovt,pro,1,Liberty,0
 15,22,Male,3,4,wrldgovt,pro,1,Liberty,0
@@ -22156,7 +22156,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 153,28,Female,7,6,marlegit,against,0,Violence,0
 18,24,Female,4,5,twoincs1,against,0,Violence,0
 65,26,Male,3,5,twoincs1,against,0,Violence,0
-125,28,NA,8,7,twoincs1,against,0,Violence,0
+125,28,Do not wish to disclose,8,7,twoincs1,against,0,Violence,0
 182,26,Male,7,2,twoincs1,against,0,Violence,0
 164,33,Male,8,6,twoincs1,against,0,Violence,0
 107,29,Male,7,6,twoincs1,against,0,Violence,0
@@ -22932,7 +22932,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 152,27,Female,7,7,ifwrong,against,0,Violence,0
 21,54,Male,8,3,ifwrong,against,0,Violence,0
 39,50,Female,10,8,wrldgovt,against,0,Violence,0
-125,28,NA,8,7,wrldgovt,against,0,Violence,0
+125,28,Do not wish to disclose,8,7,wrldgovt,against,0,Violence,0
 192,17,Male,2,6,wrldgovt,against,0,Violence,0
 25,22,Female,3,4,wrldgovt,against,0,Violence,0
 122,38,Male,7,8,wrldgovt,against,0,Violence,0
@@ -23742,7 +23742,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 216,24,Female,8,8,ifwrong,against,1,Violence,0
 138,29,Male,7,7,ifwrong,against,1,Violence,0
 222,24,Male,3,7,wrldgovt,against,1,Violence,1
-125,28,NA,8,7,amownway,against,1,Violence,1
+125,28,Do not wish to disclose,8,7,amownway,against,1,Violence,1
 43,35,Female,4,5,amownway,against,1,Violence,1
 190,19,Male,4,3,amtv,against,1,Violence,0
 129,36,Male,3,4,abpoor,against,1,Violence,1
@@ -23997,7 +23997,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 161,41,Female,7,4,abpoorw,against,1,Violence,0
 168,20,Female,7,5,abpoorw,against,1,Violence,0
 32,21,Male,3,3,abpoorw,against,1,Violence,0
-125,28,NA,8,7,ifwrong,against,1,Violence,1
+125,28,Do not wish to disclose,8,7,ifwrong,against,1,Violence,1
 83,36,Male,7,8,ifwrong,against,1,Violence,1
 25,22,Female,3,4,ifwrong,against,1,Violence,0
 54,30,Female,8,0,ifwrong,against,1,Violence,0
@@ -24312,7 +24312,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 144,55,Female,8,10,suicide1,against,1,Violence,0
 34,37,Male,7,8,xmarsex,against,1,Violence,0
 78,30,Male,8,3,xmarsex,against,1,Violence,0
-125,28,NA,8,7,xmarsex,against,1,Violence,0
+125,28,Do not wish to disclose,8,7,xmarsex,against,1,Violence,0
 26,19,Male,3,4,xmarsex,against,1,Violence,0
 56,30,Female,7,9,xmarsex,against,1,Violence,0
 191,27,Female,3,5,xmarsex,against,1,Violence,0
@@ -24666,7 +24666,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 49,29,Female,3,2,abpoorw,pro,0,Violence,0
 217,23,Female,4,3,abpoorw,pro,0,Violence,1
 137,25,Female,7,6,abpoorw,pro,0,Violence,0
-125,28,NA,8,7,ifwrong,pro,0,Violence,0
+125,28,Do not wish to disclose,8,7,ifwrong,pro,0,Violence,0
 22,42,Female,10,5,ifwrong,pro,0,Violence,1
 107,29,Male,7,6,ifwrong,pro,0,Violence,0
 67,25,Female,3,5,ifwrong,pro,0,Violence,1
@@ -24794,7 +24794,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 133,23,Female,3,4,ifwrong,pro,0,Violence,1
 138,29,Male,7,7,ifwrong,pro,0,Violence,0
 114,37,Female,8,3,ifwrong,pro,0,Violence,0
-125,28,NA,8,7,amownway,pro,0,Violence,0
+125,28,Do not wish to disclose,8,7,amownway,pro,0,Violence,0
 120,27,Female,7,5,amownway,pro,0,Violence,0
 79,25,Male,7,6,forland,pro,0,Violence,0
 29,22,Male,3,4,forland,pro,0,Violence,0
@@ -25459,7 +25459,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 191,27,Female,3,5,amtv,pro,0,Violence,0
 154,28,Male,4,2,amtv,pro,0,Violence,0
 136,25,Male,3,8,abdefect,pro,0,Violence,0
-125,28,NA,8,7,xmarsex,pro,0,Violence,0
+125,28,Do not wish to disclose,8,7,xmarsex,pro,0,Violence,0
 48,23,Female,3,7,homosex,pro,0,Violence,0
 132,26,Female,7,7,marlegit,pro,0,Violence,0
 18,24,Female,4,5,abdefctw,pro,0,Violence,0
@@ -26517,7 +26517,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 180,36,Male,7,2,libmil,pro,1,Violence,0
 67,25,Female,3,5,obeylaw,pro,1,Violence,0
 45,32,Female,8,5,obeylaw,pro,1,Violence,0
-125,28,NA,8,7,twoincs1,pro,1,Violence,1
+125,28,Do not wish to disclose,8,7,twoincs1,pro,1,Violence,1
 26,19,Male,3,4,twoincs1,pro,1,Violence,0
 193,21,Male,3,5,twoincs1,pro,1,Violence,0
 75,31,Female,7,3,twoincs1,pro,1,Violence,0
@@ -26912,7 +26912,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 149,24,Male,3,7,libmil,pro,1,Violence,0
 29,22,Male,3,4,obeylaw,pro,1,Violence,0
 105,26,Male,7,8,marlegit,pro,1,Violence,0
-125,28,NA,8,7,wrldgovt,pro,1,Violence,0
+125,28,Do not wish to disclose,8,7,wrldgovt,pro,1,Violence,0
 14,27,Female,7,6,wrldgovt,pro,1,Violence,0
 61,20,Male,7,8,wrldgovt,pro,1,Violence,0
 15,22,Male,3,4,wrldgovt,pro,1,Violence,0
@@ -27604,7 +27604,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 153,28,Female,7,6,marlegit,against,0,Government,1
 18,24,Female,4,5,twoincs1,against,0,Government,0
 65,26,Male,3,5,twoincs1,against,0,Government,1
-125,28,NA,8,7,twoincs1,against,0,Government,0
+125,28,Do not wish to disclose,8,7,twoincs1,against,0,Government,0
 182,26,Male,7,2,twoincs1,against,0,Government,0
 164,33,Male,8,6,twoincs1,against,0,Government,0
 107,29,Male,7,6,twoincs1,against,0,Government,0
@@ -28380,7 +28380,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 152,27,Female,7,7,ifwrong,against,0,Government,0
 21,54,Male,8,3,ifwrong,against,0,Government,0
 39,50,Female,10,8,wrldgovt,against,0,Government,0
-125,28,NA,8,7,wrldgovt,against,0,Government,0
+125,28,Do not wish to disclose,8,7,wrldgovt,against,0,Government,0
 192,17,Male,2,6,wrldgovt,against,0,Government,0
 25,22,Female,3,4,wrldgovt,against,0,Government,1
 122,38,Male,7,8,wrldgovt,against,0,Government,0
@@ -29190,7 +29190,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 216,24,Female,8,8,ifwrong,against,1,Government,1
 138,29,Male,7,7,ifwrong,against,1,Government,0
 222,24,Male,3,7,wrldgovt,against,1,Government,1
-125,28,NA,8,7,amownway,against,1,Government,0
+125,28,Do not wish to disclose,8,7,amownway,against,1,Government,0
 43,35,Female,4,5,amownway,against,1,Government,0
 190,19,Male,4,3,amtv,against,1,Government,0
 129,36,Male,3,4,abpoor,against,1,Government,0
@@ -29445,7 +29445,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 161,41,Female,7,4,abpoorw,against,1,Government,0
 168,20,Female,7,5,abpoorw,against,1,Government,0
 32,21,Male,3,3,abpoorw,against,1,Government,0
-125,28,NA,8,7,ifwrong,against,1,Government,1
+125,28,Do not wish to disclose,8,7,ifwrong,against,1,Government,1
 83,36,Male,7,8,ifwrong,against,1,Government,1
 25,22,Female,3,4,ifwrong,against,1,Government,0
 54,30,Female,8,0,ifwrong,against,1,Government,0
@@ -29760,7 +29760,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 144,55,Female,8,10,suicide1,against,1,Government,0
 34,37,Male,7,8,xmarsex,against,1,Government,0
 78,30,Male,8,3,xmarsex,against,1,Government,0
-125,28,NA,8,7,xmarsex,against,1,Government,0
+125,28,Do not wish to disclose,8,7,xmarsex,against,1,Government,0
 26,19,Male,3,4,xmarsex,against,1,Government,0
 56,30,Female,7,9,xmarsex,against,1,Government,0
 191,27,Female,3,5,xmarsex,against,1,Government,0
@@ -30114,7 +30114,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 49,29,Female,3,2,abpoorw,pro,0,Government,0
 217,23,Female,4,3,abpoorw,pro,0,Government,0
 137,25,Female,7,6,abpoorw,pro,0,Government,1
-125,28,NA,8,7,ifwrong,pro,0,Government,0
+125,28,Do not wish to disclose,8,7,ifwrong,pro,0,Government,0
 22,42,Female,10,5,ifwrong,pro,0,Government,0
 107,29,Male,7,6,ifwrong,pro,0,Government,0
 67,25,Female,3,5,ifwrong,pro,0,Government,1
@@ -30242,7 +30242,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 133,23,Female,3,4,ifwrong,pro,0,Government,0
 138,29,Male,7,7,ifwrong,pro,0,Government,0
 114,37,Female,8,3,ifwrong,pro,0,Government,1
-125,28,NA,8,7,amownway,pro,0,Government,0
+125,28,Do not wish to disclose,8,7,amownway,pro,0,Government,0
 120,27,Female,7,5,amownway,pro,0,Government,0
 79,25,Male,7,6,forland,pro,0,Government,0
 29,22,Male,3,4,forland,pro,0,Government,1
@@ -30907,7 +30907,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 191,27,Female,3,5,amtv,pro,0,Government,0
 154,28,Male,4,2,amtv,pro,0,Government,0
 136,25,Male,3,8,abdefect,pro,0,Government,0
-125,28,NA,8,7,xmarsex,pro,0,Government,0
+125,28,Do not wish to disclose,8,7,xmarsex,pro,0,Government,0
 48,23,Female,3,7,homosex,pro,0,Government,0
 132,26,Female,7,7,marlegit,pro,0,Government,0
 18,24,Female,4,5,abdefctw,pro,0,Government,0
@@ -31965,7 +31965,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 180,36,Male,7,2,libmil,pro,1,Government,0
 67,25,Female,3,5,obeylaw,pro,1,Government,0
 45,32,Female,8,5,obeylaw,pro,1,Government,0
-125,28,NA,8,7,twoincs1,pro,1,Government,0
+125,28,Do not wish to disclose,8,7,twoincs1,pro,1,Government,0
 26,19,Male,3,4,twoincs1,pro,1,Government,0
 193,21,Male,3,5,twoincs1,pro,1,Government,0
 75,31,Female,7,3,twoincs1,pro,1,Government,0
@@ -32360,7 +32360,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 149,24,Male,3,7,libmil,pro,1,Government,1
 29,22,Male,3,4,obeylaw,pro,1,Government,1
 105,26,Male,7,8,marlegit,pro,1,Government,1
-125,28,NA,8,7,wrldgovt,pro,1,Government,1
+125,28,Do not wish to disclose,8,7,wrldgovt,pro,1,Government,1
 14,27,Female,7,6,wrldgovt,pro,1,Government,1
 61,20,Male,7,8,wrldgovt,pro,1,Government,1
 15,22,Male,3,4,wrldgovt,pro,1,Government,1
@@ -33052,7 +33052,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 153,28,Female,7,6,marlegit,against,0,Fairness,0
 18,24,Female,4,5,twoincs1,against,0,Fairness,0
 65,26,Male,3,5,twoincs1,against,0,Fairness,0
-125,28,NA,8,7,twoincs1,against,0,Fairness,0
+125,28,Do not wish to disclose,8,7,twoincs1,against,0,Fairness,0
 182,26,Male,7,2,twoincs1,against,0,Fairness,0
 164,33,Male,8,6,twoincs1,against,0,Fairness,0
 107,29,Male,7,6,twoincs1,against,0,Fairness,0
@@ -33828,7 +33828,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 152,27,Female,7,7,ifwrong,against,0,Fairness,0
 21,54,Male,8,3,ifwrong,against,0,Fairness,1
 39,50,Female,10,8,wrldgovt,against,0,Fairness,1
-125,28,NA,8,7,wrldgovt,against,0,Fairness,0
+125,28,Do not wish to disclose,8,7,wrldgovt,against,0,Fairness,0
 192,17,Male,2,6,wrldgovt,against,0,Fairness,0
 25,22,Female,3,4,wrldgovt,against,0,Fairness,1
 122,38,Male,7,8,wrldgovt,against,0,Fairness,0
@@ -34638,7 +34638,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 216,24,Female,8,8,ifwrong,against,1,Fairness,0
 138,29,Male,7,7,ifwrong,against,1,Fairness,1
 222,24,Male,3,7,wrldgovt,against,1,Fairness,0
-125,28,NA,8,7,amownway,against,1,Fairness,1
+125,28,Do not wish to disclose,8,7,amownway,against,1,Fairness,1
 43,35,Female,4,5,amownway,against,1,Fairness,0
 190,19,Male,4,3,amtv,against,1,Fairness,0
 129,36,Male,3,4,abpoor,against,1,Fairness,1
@@ -34893,7 +34893,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 161,41,Female,7,4,abpoorw,against,1,Fairness,0
 168,20,Female,7,5,abpoorw,against,1,Fairness,0
 32,21,Male,3,3,abpoorw,against,1,Fairness,1
-125,28,NA,8,7,ifwrong,against,1,Fairness,0
+125,28,Do not wish to disclose,8,7,ifwrong,against,1,Fairness,0
 83,36,Male,7,8,ifwrong,against,1,Fairness,1
 25,22,Female,3,4,ifwrong,against,1,Fairness,0
 54,30,Female,8,0,ifwrong,against,1,Fairness,0
@@ -35208,7 +35208,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 144,55,Female,8,10,suicide1,against,1,Fairness,0
 34,37,Male,7,8,xmarsex,against,1,Fairness,0
 78,30,Male,8,3,xmarsex,against,1,Fairness,0
-125,28,NA,8,7,xmarsex,against,1,Fairness,0
+125,28,Do not wish to disclose,8,7,xmarsex,against,1,Fairness,0
 26,19,Male,3,4,xmarsex,against,1,Fairness,0
 56,30,Female,7,9,xmarsex,against,1,Fairness,0
 191,27,Female,3,5,xmarsex,against,1,Fairness,0
@@ -35562,7 +35562,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 49,29,Female,3,2,abpoorw,pro,0,Fairness,1
 217,23,Female,4,3,abpoorw,pro,0,Fairness,0
 137,25,Female,7,6,abpoorw,pro,0,Fairness,0
-125,28,NA,8,7,ifwrong,pro,0,Fairness,0
+125,28,Do not wish to disclose,8,7,ifwrong,pro,0,Fairness,0
 22,42,Female,10,5,ifwrong,pro,0,Fairness,1
 107,29,Male,7,6,ifwrong,pro,0,Fairness,0
 67,25,Female,3,5,ifwrong,pro,0,Fairness,0
@@ -35690,7 +35690,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 133,23,Female,3,4,ifwrong,pro,0,Fairness,1
 138,29,Male,7,7,ifwrong,pro,0,Fairness,0
 114,37,Female,8,3,ifwrong,pro,0,Fairness,0
-125,28,NA,8,7,amownway,pro,0,Fairness,1
+125,28,Do not wish to disclose,8,7,amownway,pro,0,Fairness,1
 120,27,Female,7,5,amownway,pro,0,Fairness,0
 79,25,Male,7,6,forland,pro,0,Fairness,0
 29,22,Male,3,4,forland,pro,0,Fairness,0
@@ -36355,7 +36355,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 191,27,Female,3,5,amtv,pro,0,Fairness,0
 154,28,Male,4,2,amtv,pro,0,Fairness,0
 136,25,Male,3,8,abdefect,pro,0,Fairness,1
-125,28,NA,8,7,xmarsex,pro,0,Fairness,0
+125,28,Do not wish to disclose,8,7,xmarsex,pro,0,Fairness,0
 48,23,Female,3,7,homosex,pro,0,Fairness,0
 132,26,Female,7,7,marlegit,pro,0,Fairness,0
 18,24,Female,4,5,abdefctw,pro,0,Fairness,0
@@ -37413,7 +37413,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 180,36,Male,7,2,libmil,pro,1,Fairness,0
 67,25,Female,3,5,obeylaw,pro,1,Fairness,1
 45,32,Female,8,5,obeylaw,pro,1,Fairness,1
-125,28,NA,8,7,twoincs1,pro,1,Fairness,1
+125,28,Do not wish to disclose,8,7,twoincs1,pro,1,Fairness,1
 26,19,Male,3,4,twoincs1,pro,1,Fairness,0
 193,21,Male,3,5,twoincs1,pro,1,Fairness,0
 75,31,Female,7,3,twoincs1,pro,1,Fairness,1
@@ -37808,7 +37808,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 149,24,Male,3,7,libmil,pro,1,Fairness,0
 29,22,Male,3,4,obeylaw,pro,1,Fairness,0
 105,26,Male,7,8,marlegit,pro,1,Fairness,0
-125,28,NA,8,7,wrldgovt,pro,1,Fairness,0
+125,28,Do not wish to disclose,8,7,wrldgovt,pro,1,Fairness,0
 14,27,Female,7,6,wrldgovt,pro,1,Fairness,0
 61,20,Male,7,8,wrldgovt,pro,1,Fairness,0
 15,22,Male,3,4,wrldgovt,pro,1,Fairness,0
@@ -38500,7 +38500,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 153,28,Female,7,6,marlegit,against,0,Ingroup,0
 18,24,Female,4,5,twoincs1,against,0,Ingroup,0
 65,26,Male,3,5,twoincs1,against,0,Ingroup,0
-125,28,NA,8,7,twoincs1,against,0,Ingroup,0
+125,28,Do not wish to disclose,8,7,twoincs1,against,0,Ingroup,0
 182,26,Male,7,2,twoincs1,against,0,Ingroup,0
 164,33,Male,8,6,twoincs1,against,0,Ingroup,0
 107,29,Male,7,6,twoincs1,against,0,Ingroup,0
@@ -39276,7 +39276,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 152,27,Female,7,7,ifwrong,against,0,Ingroup,0
 21,54,Male,8,3,ifwrong,against,0,Ingroup,0
 39,50,Female,10,8,wrldgovt,against,0,Ingroup,0
-125,28,NA,8,7,wrldgovt,against,0,Ingroup,0
+125,28,Do not wish to disclose,8,7,wrldgovt,against,0,Ingroup,0
 192,17,Male,2,6,wrldgovt,against,0,Ingroup,0
 25,22,Female,3,4,wrldgovt,against,0,Ingroup,0
 122,38,Male,7,8,wrldgovt,against,0,Ingroup,0
@@ -40086,7 +40086,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 216,24,Female,8,8,ifwrong,against,1,Ingroup,1
 138,29,Male,7,7,ifwrong,against,1,Ingroup,0
 222,24,Male,3,7,wrldgovt,against,1,Ingroup,0
-125,28,NA,8,7,amownway,against,1,Ingroup,0
+125,28,Do not wish to disclose,8,7,amownway,against,1,Ingroup,0
 43,35,Female,4,5,amownway,against,1,Ingroup,0
 190,19,Male,4,3,amtv,against,1,Ingroup,0
 129,36,Male,3,4,abpoor,against,1,Ingroup,0
@@ -40341,7 +40341,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 161,41,Female,7,4,abpoorw,against,1,Ingroup,0
 168,20,Female,7,5,abpoorw,against,1,Ingroup,0
 32,21,Male,3,3,abpoorw,against,1,Ingroup,0
-125,28,NA,8,7,ifwrong,against,1,Ingroup,0
+125,28,Do not wish to disclose,8,7,ifwrong,against,1,Ingroup,0
 83,36,Male,7,8,ifwrong,against,1,Ingroup,1
 25,22,Female,3,4,ifwrong,against,1,Ingroup,0
 54,30,Female,8,0,ifwrong,against,1,Ingroup,1
@@ -40656,7 +40656,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 144,55,Female,8,10,suicide1,against,1,Ingroup,0
 34,37,Male,7,8,xmarsex,against,1,Ingroup,0
 78,30,Male,8,3,xmarsex,against,1,Ingroup,0
-125,28,NA,8,7,xmarsex,against,1,Ingroup,0
+125,28,Do not wish to disclose,8,7,xmarsex,against,1,Ingroup,0
 26,19,Male,3,4,xmarsex,against,1,Ingroup,0
 56,30,Female,7,9,xmarsex,against,1,Ingroup,0
 191,27,Female,3,5,xmarsex,against,1,Ingroup,0
@@ -41010,7 +41010,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 49,29,Female,3,2,abpoorw,pro,0,Ingroup,0
 217,23,Female,4,3,abpoorw,pro,0,Ingroup,1
 137,25,Female,7,6,abpoorw,pro,0,Ingroup,0
-125,28,NA,8,7,ifwrong,pro,0,Ingroup,1
+125,28,Do not wish to disclose,8,7,ifwrong,pro,0,Ingroup,1
 22,42,Female,10,5,ifwrong,pro,0,Ingroup,1
 107,29,Male,7,6,ifwrong,pro,0,Ingroup,1
 67,25,Female,3,5,ifwrong,pro,0,Ingroup,1
@@ -41138,7 +41138,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 133,23,Female,3,4,ifwrong,pro,0,Ingroup,1
 138,29,Male,7,7,ifwrong,pro,0,Ingroup,1
 114,37,Female,8,3,ifwrong,pro,0,Ingroup,1
-125,28,NA,8,7,amownway,pro,0,Ingroup,1
+125,28,Do not wish to disclose,8,7,amownway,pro,0,Ingroup,1
 120,27,Female,7,5,amownway,pro,0,Ingroup,1
 79,25,Male,7,6,forland,pro,0,Ingroup,1
 29,22,Male,3,4,forland,pro,0,Ingroup,0
@@ -41803,7 +41803,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 191,27,Female,3,5,amtv,pro,0,Ingroup,0
 154,28,Male,4,2,amtv,pro,0,Ingroup,1
 136,25,Male,3,8,abdefect,pro,0,Ingroup,0
-125,28,NA,8,7,xmarsex,pro,0,Ingroup,1
+125,28,Do not wish to disclose,8,7,xmarsex,pro,0,Ingroup,1
 48,23,Female,3,7,homosex,pro,0,Ingroup,0
 132,26,Female,7,7,marlegit,pro,0,Ingroup,0
 18,24,Female,4,5,abdefctw,pro,0,Ingroup,0
@@ -42861,7 +42861,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 180,36,Male,7,2,libmil,pro,1,Ingroup,0
 67,25,Female,3,5,obeylaw,pro,1,Ingroup,0
 45,32,Female,8,5,obeylaw,pro,1,Ingroup,0
-125,28,NA,8,7,twoincs1,pro,1,Ingroup,0
+125,28,Do not wish to disclose,8,7,twoincs1,pro,1,Ingroup,0
 26,19,Male,3,4,twoincs1,pro,1,Ingroup,0
 193,21,Male,3,5,twoincs1,pro,1,Ingroup,0
 75,31,Female,7,3,twoincs1,pro,1,Ingroup,0
@@ -43256,7 +43256,7 @@ id,age,sex,edu,polviews_10,issue,type,opinion,mf,value
 149,24,Male,3,7,libmil,pro,1,Ingroup,0
 29,22,Male,3,4,obeylaw,pro,1,Ingroup,0
 105,26,Male,7,8,marlegit,pro,1,Ingroup,0
-125,28,NA,8,7,wrldgovt,pro,1,Ingroup,0
+125,28,Do not wish to disclose,8,7,wrldgovt,pro,1,Ingroup,0
 14,27,Female,7,6,wrldgovt,pro,1,Ingroup,0
 61,20,Male,7,8,wrldgovt,pro,1,Ingroup,0
 15,22,Male,3,4,wrldgovt,pro,1,Ingroup,0
