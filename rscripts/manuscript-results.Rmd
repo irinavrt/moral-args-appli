@@ -26,7 +26,7 @@ theme_set(theme_half_open(11))
 
 ```
 
-```{r data, echo=FALSE}
+```{r data}
 
 # US
 
@@ -125,7 +125,7 @@ comb_arg <- bind_rows(
 
 ```
 
-```{r functions, echo=FALSE}
+```{r functions}
 
 # estimate argument applicability within separate groups defined by group_var
 
