@@ -8,9 +8,9 @@ output:
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
-                      dpi = 300, dev="jpeg", fig.width = 7,
-                      tidy = TRUE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE,
+                      fig.width = 7.1, fig.height = 3.15,
+                      dpi = 300, dev="jpeg", tidy = TRUE)
 
 library(readr)
 library(dplyr)
@@ -34,16 +34,20 @@ us_arg <- read_csv("../data/us-argument-data-clean.csv")
 
 us_arg <- us_arg %>% 
   mutate(
+    sex = fct_relevel(sex, "male"),
     age_gr = cut(age, 
                  breaks = c(0, median(age, na.rm = TRUE), 100), 
                  labels = c("Younger", "Older")),
     verb_ability = ifelse(wordsum > median(wordsum, na.rm = TRUE),
                           "Higher",
                           "Lower"),
+    verb_ability = fct_relevel(verb_ability, "Lower"),
     edu = fct_collapse(edu, 
                        Lower = "<bach", 
                        Higher = c("bach", "grad")),
-   position = paste0(issue, "_", type)
+   position = paste0(issue, "_", type),
+   mf = factor(mf, levels = c("Harm", "Fairness", "Liberty", "Violence",
+                            "Authority", "Purity", "Ingroup", "Government"))
   )
         
 # UK
@@ -59,12 +63,15 @@ uk_arg <- uk_arg %>%
                    breaks = c(0, 3, 6, 10),
                    include.lowest = TRUE,
                    labels = c("Left", "Moderate", "Right")),
-       position = paste0(issue, "_", type)
+    edu = factor(edu, levels = c("lower", "higher"), labels = c("Lower", "Higher")),
+    position = paste0(issue, "_", type),
+   mf = factor(mf, levels = c("Harm", "Fairness", "Liberty", "Violence",
+                            "Authority", "Purity", "Ingroup", "Government"))
   ) 
 
 # Israel
-
 il_arg <- read_csv("../data/il-argument-data-clean.csv")
+
 il_arg <- il_arg %>% 
   mutate(
     age_gr = cut(age, 
@@ -75,11 +82,10 @@ il_arg <- il_arg %>%
                    include.lowest = TRUE,
                    labels = c("Left", "Moderate", "Right")),
     edu = ifelse(edu > 4, "Higher", "Lower"),
-    position = paste0(issue, "_", type)
+    position = paste0(issue, "_", type) 
   ) 
       
 # Brazil
-
 br_arg <- read_csv("../data/br-argument-data-clean.csv")
 br_arg <- br_arg %>% 
   mutate(
@@ -165,6 +171,31 @@ ccc_by_group <- function(data, group_var) {
     mutate(group = as_label(group_var))
 }
 
+get_group_prop <- function(data, group_var) {
+  group_var <- enquo(group_var)
+  
+  data %>% 
+    drop_na(!!group_var) %>% 
+    summarise(prop = mean(!!group_var == first(!!group_var))) %>% 
+    mutate(group = as_label(group_var))
+}
+
+estimate_random_group_ccc <- function(data, p = .5) {
+  
+  data %>% 
+    # draw random group
+    mutate(rand_gr = rbinom(n = n(), size = 1, prob = p),
+           rand_gr = factor(rand_gr)) %>% 
+    # aggregate arg connection by random group
+    group_by(mf, position, rand_gr) %>%
+    summarise(link = mean(value), .groups = "drop") %>%
+    # calculate CCC
+    spread(rand_gr, link) %>% 
+    summarise(ccc = DescTools::CCC(`0`, `1`)$rho.c$est) %>% 
+    pull(ccc)
+}
+
+
 
 ```
 
@@ -197,7 +228,7 @@ us_sample %>%
 
 ## Results
 
-```{r us_boxpl, fig.width=7, fig.height=5, fig.cap = "Figure 1. Boxplots showing how applicability, estimated in the entire sample of Study 1, of eight different kinds of moral arguments varied across 196 moral opinions. The box represents the interquartile (IQ) range with the dark line indicating the median. The whiskers reach the min and max values in case these are at most 1.5 times the box height outside the IQ range. Circles and stars signify outliers (values between 1.5 and 3 times the IQ range) and extreme outliers (more than 3 times the IQ range), respectively."}
+```{r us_boxpl, fig.cap = "Figure 1. Boxplots showing how applicability, estimated in the entire sample of Study 1, of eight different kinds of moral arguments varied across 196 moral opinions. The box represents the interquartile (IQ) range with the dark line indicating the median. The whiskers reach the min and max values in case these are at most 1.5 times the box height outside the IQ range. Circles and stars signify outliers (values between 1.5 and 3 times the IQ range) and extreme outliers (more than 3 times the IQ range), respectively."}
 
 
 us_arg_connection  <- us_arg %>% 
@@ -223,34 +254,11 @@ us_arg_connection %>%
   theme(legend.position = "none") +
   labs(y = "Arguments applicablity", x = "Moral foundation")
 
-#ggsave("fig1_us-arg-applicability.jpeg", width = 180, height = 80, units = "mm", dpi = 300)
+# ggsave("fig1_us-arg-applicability.jpeg", width = 180, height = 80, units = "mm", dpi = 300)
 
 ```
 
-```{r us_rand_ccc, cache = TRUE}
-
-# Simulate 100 random splits in two even groups and calculate the mean CCC
-set.seed(8404)
-us_rand_gr_mult <- tibble(id = rep(unique(us_arg$id), 100),
-                       draw = rep(1:100, 
-                                    each = length(unique(us_arg$id)))) %>%
-  mutate(rand_gr = rbinom(n = n(), size = 1, prob = .5),
-         rand_gr = factor(rand_gr))
-
-
-us_ccc_rand_gr <- left_join(us_arg, us_rand_gr_mult) %>%
-  group_by(draw, mf, position, rand_gr) %>%
-  summarise(link = mean(value)) %>%
-  spread(rand_gr, link) %>% 
-  group_by(draw) %>%
-  summarise(DescTools::CCC(`0`, `1`)$rho.c,
-            r = cor(`0`, `1`, use = "pair")) %>% 
-  summarise(rand_gr = mean(est))
-
-```
-
-
-```{r us_ccc}
+```{r us_ccc, cache = TRUE}
 
 us_mf_agreement <- bind_rows(
   ccc_by_group(us_arg, polviews),
@@ -260,8 +268,32 @@ us_mf_agreement <- bind_rows(
   ccc_by_group(us_arg, edu)
 )
 
+us_group_p <- bind_rows(
+  get_group_prop(us_arg, polviews),
+  get_group_prop(us_arg, sex),
+  get_group_prop(us_arg, age_gr),
+  get_group_prop(us_arg, verb_ability),
+  get_group_prop(us_arg, edu)
+)
+
+set.seed(28943)
+
+us_mf_agreement <- left_join(us_mf_agreement, us_group_p)
+
+make_1000_draws <- function(prop) {
+  map_dbl(1:1000, ~estimate_random_group_ccc(us_arg, prop))
+}
+
 us_mf_agreement <- us_mf_agreement %>% 
-  mutate(label = sprintf("%.2f [%.2f, %.2f]", est, lwr.ci, upr.ci), 
+  mutate(rand_ccc = map(prop, make_1000_draws))
+
+us_mf_agreement <- us_mf_agreement %>% 
+  mutate(p = map2_dbl(est, rand_ccc, ~mean(.y < .x)),
+         mean_rand = map_dbl(rand_ccc, mean))
+
+us_mf_agr_table <- us_mf_agreement %>% 
+  mutate(label = sprintf("%.2f [%.2f, %.2f]", est, lwr.ci, upr.ci),
+         p = sprintf("%.3f", p), 
          group = factor(group,
                         levels = c("sex", 
                                    "age_gr",
@@ -273,18 +305,22 @@ us_mf_agreement <- us_mf_agreement %>%
                                    "Ideology", 
                                    "Education",
                                    "Verbal ability"))) %>% 
+  select(group, label, mean_rand, p) %>% 
   arrange(group)
 
-us_mf_agreement %>%  
-  select(group, label) %>% 
-  kbl(col.names = c(" ", "CCC with 95% CI"),
-      caption = "Table 2. CCC values with 95% confidence interval.") %>% 
+us_mf_agr_table %>%  
+  kbl(col.names = c("Compared subsamples", 
+                    "CCC with 95% CI", 
+                    "Expected CCC based on random split", 
+                    "p"),
+      caption = "Table 2. CCC values with 95% confidence interval.",
+      digits = 3) %>% 
   kable_classic(full_width = FALSE) 
 
 ```
 
 
-```{r fig.height=3.9, fig.cap="Figure 2. Scatter plots of 1,568 argument applicability scores (8 types of arguments by 196 moral opinions), measured in different groups in the United States: women vs. men (A),  younger vs. older (B), liberals vs. conservatives (C), higher vs. lower education (D), and higher vs. lower verbal ability (E). Regression lines in blue and reference lines for perfect agreement in black."}
+```{r fig.height=3.94, fig.cap="Figure 2. Scatter plots of 1,568 argument applicability scores (8 types of arguments by 196 moral opinions), measured in different groups in the United States: women vs. men (A),  younger vs. older (B), liberals vs. conservatives (C), higher vs. lower education (D), and higher vs. lower verbal ability (E). Regression lines in blue and reference lines for perfect agreement in black."}
 
 us_mf_link_by_gr <- bind_rows(
   link_by_group(us_arg, polviews),
@@ -343,10 +379,25 @@ cowplot::plot_grid(pl1, pl2, pl3, pl4, pl5,
                    labels = "AUTO", 
                    label_size = 11)
 
-# ggsave("fig2_us-scatter-by-groups.jpeg", width = 180, height = 100, 
+# ggsave("fig2_us-scatter-by-groups.jpeg", width = 180, height = 100,
 #        units = "mm", dpi = 300)
 
 ```
+
+Variance ratio between higher and lower verbal ability.
+
+```{r}
+
+us_mf_link_by_gr %>% 
+  filter(group == "verb_ability") %>% 
+  rename(higher = `1`, lower = `2`) %>% 
+  group_by(mf) %>%
+  summarise_at(vars(higher, lower), var) %>% 
+  transmute(mf, ratio = lower/higher) %>% 
+  arrange(ratio)
+
+```
+
 
 
 # Study 2. UK
@@ -362,7 +413,7 @@ uk_sample <- uk_arg %>%
   summarise(n_issues = n(), .groups = "drop")
 
 uk_sample %>% 
-  summarise(n = n(),
+  summarise(n = n_distinct(id),
             mean(n_issues),
             women = mean(sex == "Female", na.rm = TRUE),
             mean_age = mean(age, na.rm = TRUE),
@@ -370,13 +421,13 @@ uk_sample %>%
             left = mean(polviews == "Left", na.rm = TRUE),
             moderate = mean(polviews == "Moderate", na.rm = TRUE),
             right = mean(polviews == "Right", na.rm = TRUE),
-            edu_higher = mean(edu == "higher", na.rm = TRUE))
+            edu_higher = mean(edu == "Higher", na.rm = TRUE))
 
 ```
 
 ## Results
 
-```{r uk_boxpl, fig.height=3.1, fig.cap = "Figure 3. Boxplots (defined in Figure 2) showing how applicability, estimated in the entire sample of Study 2, of eight different kinds of moral arguments varied across 216 moral opinions."}
+```{r uk_boxpl, fig.cap = "Figure 3. Boxplots (defined in Figure 2) showing how applicability, estimated in the entire sample of Study 2, of eight different kinds of moral arguments varied across 216 moral opinions."}
 
 
 uk_arg_connection  <- uk_arg %>% 
@@ -406,30 +457,8 @@ uk_arg_connection %>%
 
 ```
 
-```{r uk_rand_ccc, cache = TRUE}
 
-# Simulate 100 random splits in two even groups and calculate the mean CCC
-set.seed(8405)
-uk_rand_gr_mult <- tibble(id = rep(unique(uk_arg$id), 100),
-                       draw = rep(1:100, 
-                                    each = length(unique(uk_arg$id)))) %>%
-  mutate(rand_gr = rbinom(n = n(), size = 1, prob = .5),
-         rand_gr = factor(rand_gr))
-
-
-uk_ccc_rand_gr <- left_join(uk_arg, uk_rand_gr_mult) %>%
-  group_by(draw, mf, position, rand_gr) %>%
-  summarise(link = mean(value)) %>%
-  spread(rand_gr, link) %>% 
-  group_by(draw) %>%
-  summarise(DescTools::CCC(`0`, `1`)$rho.c,
-            r = cor(`0`, `1`, use = "pair")) %>% 
-  summarise(rand_gr = mean(est))
-
-```
-
-
-```{r uk_ccc}
+```{r uk_ccc, cache = TRUE}
 
 uk_mf_agreement <- bind_rows(
   ccc_by_group(filter(uk_arg, 
@@ -441,7 +470,38 @@ uk_mf_agreement <- bind_rows(
   ccc_by_group(uk_arg, edu)
 )
 
+uk_group_prop <- bind_rows(
+  get_group_prop(filter(uk_arg, 
+                      polviews %in% c("Left", "Right")) %>% 
+                 droplevels(), polviews),
+  get_group_prop(uk_arg, sex),
+  get_group_prop(uk_arg, age_gr),
+  get_group_prop(uk_arg, edu)
+)
+
+set.seed(653452)
+
+uk_mf_agreement <- left_join(uk_mf_agreement, uk_group_prop)
+
+make_1000_draws <- function(data, prop) {
+  map_dbl(1:1000, ~estimate_random_group_ccc(data, prop))
+}
+
+uk_mf_agreement$data <- list(
+   droplevels(filter(uk_arg, polviews %in% c("Left", "Right"))),
+   uk_arg,
+   uk_arg,
+   uk_arg
+)
+
 uk_mf_agreement <- uk_mf_agreement %>% 
+  mutate(rand_ccc = map2(data, prop, make_1000_draws))
+
+uk_mf_agreement <- uk_mf_agreement %>% 
+  mutate(p = map2_dbl(est, rand_ccc, ~mean(.y < .x)),
+         mean_rand = map_dbl(rand_ccc, mean))
+
+uk_mf_agr_table <- uk_mf_agreement %>% 
   mutate(label = sprintf("%.2f [%.2f, %.2f]", est, lwr.ci, upr.ci), 
          group = factor(group,
                         levels = c("sex", 
@@ -451,18 +511,24 @@ uk_mf_agreement <- uk_mf_agreement %>%
                         labels = c("Sex", 
                                    "Age", 
                                    "Ideology", 
-                                   "Education"))) %>% 
+                                   "Education")),
+         p = sprintf("%.3f", p)) %>% 
+  select(group, label, mean_rand, p) %>% 
   arrange(group)
 
-uk_mf_agreement %>%  
-  select(group, label) %>% 
-  kbl(col.names = c(" ", "CCC with 95% CI")) %>% 
+uk_mf_agr_table %>%  
+  kbl(col.names = c("Compared subsamples", 
+                    "CCC with 95% CI", 
+                    "Expected CCC based on random split", 
+                    "p"),
+      digits = 3,
+      caption = "Table 3. The CCC value with 95% confidence interval.") %>% 
   kable_classic(full_width = FALSE) 
 
 ```
 
 
-```{r fig.width=3.3, fig.height=2.7}
+```{r fig.width=3.35, fig.height=2.76, fig.cap="Figure 4. Scatter plots of 1,728 argument applicability scores (8 types of arguments by 216 moral opinions), measured in different groups in the United Kingdom: women vs. men (A),  younger vs. older (B), right-wing vs. left-wing (C), and higher vs. lower education (D). Regression lines in blue and reference lines for perfect agreement in black."}
 
 uk_mf_diff <- bind_rows(
   link_by_group(filter(uk_arg, polviews %in% c("Left", "Right")) %>%
@@ -515,7 +581,6 @@ cowplot::plot_grid(pl1, pl2, pl3, pl4,
                    labels = "AUTO", 
                    label_size = 9)
 
-
 # ggsave("fig4_uk-scatter-by-groups.jpeg", width = 85, height = 70, units = "mm", dpi = 300)
 
 ```
@@ -524,21 +589,6 @@ cowplot::plot_grid(pl1, pl2, pl3, pl4,
 # Study 3. Combined US, UK, IL, and BR analysis 
 
 ## Method
-
-```{r common_items}
-
-common_items %>% 
-  mutate(bsa_text = ifelse(reverse == 1, 
-                           paste0(bsa_text, "*"),
-                           bsa_text)) %>% 
-  select(gss_text, bsa_text) %>% 
-  kbl(col.names = c("General Social Survey items",
-                    "British Social Attitudes items"),
-      caption = "Table 4. Matching items identified in the GSS and BSA. An asterisk (*) indicates that the issue positions were reverse coded in the UK version to match the US version.") %>% 
-    kable_classic() 
-
-
-```
 
 ### IL sample
 
@@ -589,20 +639,64 @@ br_sample %>%
 ## Results
 
 
-```{r com_scatter, fig.width = 4.7, fig.cap="Figure 5. Scatter plots of 432 argument applicability scores for (8 types of arguments by 54 moral opinions). Each row compares data from two of our four countries US, UK, Israel (IL) and Brazil (BR). Every plot includes the CCC value with 95% confidence interval. Regression lines in blue and reference lines for perfect agreement in black."}
+```{r ccc_bw_cntry, cache = TRUE}
+
+comp_table <- tibble(combination = combn(unique(comb_arg$sample), 2, simplify = FALSE))
+
+add_ccc_prop_for_comb <- function(combination) {
+  df <- comb_arg %>% 
+    filter(sample %in% combination) 
+  
+  bind_cols(
+    ccc_by_group(df, sample) %>% select(-group),
+    get_group_prop(df, sample) %>% select(-group)
+    )
+}
+
+comp_table <- comp_table %>% 
+  mutate(label = map_chr(combination, paste0, collapse = " "),
+         map_df(combination, add_ccc_prop_for_comb))
+
+set.seed(83045)
+
+make_1000_draws <- function(data, prop) {
+  map_dbl(1:1000, ~estimate_random_group_ccc(data, prop))
+}
+
+comp_table <- comp_table %>% 
+  mutate(rand_ccc = map2(combination, prop, 
+                         ~make_1000_draws(filter(comb_arg, sample %in% .x), .y)))
+
+comp_table <- comp_table %>% 
+  mutate(p = map2_dbl(est, rand_ccc, ~mean(.y < .x)),
+         mean_rand = map_dbl(rand_ccc, mean))
+
+comp_table_format <- comp_table %>% 
+  mutate(ccc = sprintf("%.2f [%.2f, %.2f]", est, lwr.ci, upr.ci),
+         p = sprintf("%.3f", p)) %>% 
+  select(label, ccc, mean_rand, p) 
+
+comp_table_format %>%  
+  kbl(col.names = c("Compared subsamples", 
+                    "CCC with 95% CI", 
+                    "Expected CCC based on random split", 
+                    "p"),
+      digits = 3,
+      caption = "Table 4. The CCC value with 95% confidence interval.") %>% 
+  kable_classic(full_width = FALSE) 
+
+```
+
+
+
+```{r com_scatter, fig.height = 4.7, fig.cap="Figure 5. Scatter plots of 432 argument applicability scores for (8 types of arguments by 54 moral opinions). Each row compares data from two of our four countries US, UK, Israel (IL) and Brazil (BR). Regression lines in blue and reference lines for perfect agreement in black."}
 
 improve_plot <- function(pl, label_data) {
-  ccc_label <- sprintf("%.2f [%.2f, %.2f]", 
-                       label_data$est, 
-                       label_data$lwr.ci, 
-                       label_data$upr.ci)
-  
+
   pl +
     geom_point(alpha = .4) +
     geom_abline() +
     geom_smooth(method = "lm", se = FALSE) +
-    annotate(geom = "text", label = ccc_label,
-             x = 0, y = .95, hjust = 0, size = 3.3) +
     scale_x_continuous(limits = c(0, 1), 
                        breaks = c(0, .25, .50, .75, 1)) + 
     scale_y_continuous(limits = c(0, 1), 
@@ -654,13 +748,13 @@ il_br_pl <- arg_link_by_group %>%
   ggplot(aes(IL, BR)) %>% 
   improve_plot(label_data = summarise(arg_link_by_group, 
                                       CCC(IL, BR)$rho.c)) + 
-  labs(x = "IL sample", y = "BB sample") 
+  labs(x = "IL sample", y = "BR sample") 
 
 cowplot::plot_grid(us_uk_pl, NULL, NULL,
                    us_il_pl, uk_il_pl, NULL,
                    us_br_pl, uk_br_pl, il_br_pl) 
 
-# ggsave("fig5_scatter-by-cntry.jpeg", width = 180, height = 120, 
+# ggsave("fig5_scatter-by-cntry.jpeg", width = 180, height = 120,
 #        units = "mm", dpi = 300)
 
 ```
@@ -677,7 +771,7 @@ comb_arg_full <- bind_rows(
 )
 
 # Probability to agree for each issue
-  p_agree <- comb_arg_full %>%
+p_agree <- comb_arg_full %>%
     filter(type == "pro") %>%
     select(sample, id, issue, opinion) %>%
     distinct() %>%
@@ -709,9 +803,11 @@ estimate_random_ccc <- function(data) {
 set.seed(28943)
 
 # Make 100 ccc simulations and average 
-random_ccc <- map_df(1:100, ~estimate_random_ccc(p_agree)) %>% 
-  group_by(sample) %>% 
-  summarise(exp_ccc = mean(est))
+random_ccc <- map_df(1:1000, ~estimate_random_ccc(p_agree))
+
+random_ccc_by_sample <- random_ccc %>% 
+  chop(est) %>% 
+  rename(rand_ccc = est)
 
 ccc_for_agreement <- comb_arg_full %>% 
   group_by(sample, mf, issue, position, opinion) %>% 
@@ -719,21 +815,31 @@ ccc_for_agreement <- comb_arg_full %>%
   spread(opinion, link) %>% 
   drop_na() %>% 
   group_by(sample) %>% 
-  summarise(n_opinin = n_distinct(position), CCC(`0`, `1`)$rho.c) %>% 
-  transmute(sample, 
-            n_opinin, 
-            ccc = sprintf("%.2f [%.2f, %.2f]", est, lwr.ci, upr.ci)) 
+  summarise(n_opinin = n_distinct(position), CCC(`0`, `1`)$rho.c) 
 
-left_join(ccc_for_agreement, random_ccc) %>%
-  mutate(sample = fct_rev(sample),
-         exp_ccc = sprintf("%.2f", exp_ccc)) %>% 
+ccc_for_agreement <- left_join(ccc_for_agreement, random_ccc_by_sample)
+
+ccc_for_agreement <- ccc_for_agreement %>% 
+  mutate(p = map2_dbl(est, rand_ccc, ~mean(.y < .x)),
+         mean_rand = map_dbl(rand_ccc, mean),
+         median_rand = map_dbl(rand_ccc, median))
+
+ccc_for_agr_tbl <- ccc_for_agreement %>% 
+  mutate(ccc = sprintf("%.2f [%.2f, %.2f]", est, lwr.ci, upr.ci), 
+         sample = fct_rev(sample),
+         mean_rand = sprintf("%.3f", mean_rand)) %>% 
+  select(sample, n_opinin, ccc, mean_rand, p)
+
+ccc_for_agr_tbl %>% 
   arrange(sample) %>% 
   kbl(col.names = c(
     "Country", 
     "Number of opinions",
     "CCC with 95% CI",
-    "Expected CCC under perfect agreement"
-    )) %>% 
+    "Expected CCC under perfect agreement",
+    "p"
+    ),
+    caption = "Table 5. CCC values, with 95% confidence intervals, measuring in four countries the extent to which people with different opinions on the underlying moral issues agreed on argument applicability.") %>% 
   kable_classic(full_width = FALSE) 
   
 ```
