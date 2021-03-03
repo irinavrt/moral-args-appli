@@ -254,7 +254,8 @@ us_arg_connection %>%
   theme(legend.position = "none") +
   labs(y = "Arguments applicablity", x = "Moral foundation")
 
-# ggsave("fig1_us-arg-applicability.jpeg", width = 180, height = 80, units = "mm", dpi = 300)
+# ggsave("fig1_us-arg-applicability.eps", 
+#        width = 180, height = 80, units = "mm")
 
 ```
 
@@ -379,8 +380,10 @@ cowplot::plot_grid(pl1, pl2, pl3, pl4, pl5,
                    labels = "AUTO", 
                    label_size = 11)
 
-# ggsave("fig2_us-scatter-by-groups.jpeg", width = 180, height = 100,
-#        units = "mm", dpi = 300)
+# ggsave("fig2_us-scatter-by-groups.eps", pl,
+#        device = cairo_ps, fallback_resolution = 600,
+#        width = 180, height = 100,
+#        units = "mm")
 
 ```
 
@@ -453,7 +456,7 @@ uk_arg_connection %>%
   theme(legend.position = "none") +
   labs(y = "Arguments applicablity", x = "Moral foundation")
 
-# ggsave("fig3_uk-arg-applicability.jpeg", width = 180, height = 80, units = "mm", dpi = 300)
+# ggsave("fig3_uk-arg-applicability.eps", width = 180, height = 80, units = "mm")
 
 ```
 
@@ -581,7 +584,9 @@ cowplot::plot_grid(pl1, pl2, pl3, pl4,
                    labels = "AUTO", 
                    label_size = 9)
 
-# ggsave("fig4_uk-scatter-by-groups.jpeg", width = 85, height = 70, units = "mm", dpi = 300)
+# ggsave("fig4_uk-scatter-by-groups.eps", pl,
+#        device = cairo_ps, fallback_resolution = 600,
+#        width = 120, height = 100, units = "mm")
 
 ```
 
@@ -754,9 +759,10 @@ cowplot::plot_grid(us_uk_pl, NULL, NULL,
                    us_il_pl, uk_il_pl, NULL,
                    us_br_pl, uk_br_pl, il_br_pl) 
 
-# ggsave("fig5_scatter-by-cntry.jpeg", width = 180, height = 120,
-#        units = "mm", dpi = 300)
-
+# ggsave("fig5_scatter-by-cntry.eps", 
+#        device = cairo_ps, fallback_resolution = 600,
+#        width = 180, height = 120,
+#         units = "mm")
 ```
 
 ## Agreement on argument applicability
@@ -800,7 +806,9 @@ estimate_random_ccc <- function(data) {
     summarise(est = CCC(`0`, `1`)$rho.c$est, .groups = "drop") 
 }
 
-set.seed(28943)
+# The results in the manuscript are negligibly different due to using a different seed value
+
+set.seed(653452)
 
 # Make 100 ccc simulations and average 
 random_ccc <- map_df(1:1000, ~estimate_random_ccc(p_agree))

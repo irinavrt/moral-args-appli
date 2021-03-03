@@ -268,29 +268,29 @@ Variance ratio between higher and lower verbal ability.
    <td style="text-align:left;"> US </td>
    <td style="text-align:right;"> 194 </td>
    <td style="text-align:left;"> 0.82 [0.80, 0.83] </td>
-   <td style="text-align:left;"> 0.855 </td>
-   <td style="text-align:right;"> 0.008 </td>
+   <td style="text-align:left;"> 0.853 </td>
+   <td style="text-align:right;"> 0.023 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> UK </td>
    <td style="text-align:right;"> 216 </td>
    <td style="text-align:left;"> 0.73 [0.71, 0.75] </td>
-   <td style="text-align:left;"> 0.781 </td>
-   <td style="text-align:right;"> 0.048 </td>
+   <td style="text-align:left;"> 0.782 </td>
+   <td style="text-align:right;"> 0.039 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> IL </td>
    <td style="text-align:right;"> 54 </td>
    <td style="text-align:left;"> 0.57 [0.50, 0.63] </td>
    <td style="text-align:left;"> 0.695 </td>
-   <td style="text-align:right;"> 0.011 </td>
+   <td style="text-align:right;"> 0.019 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> BR </td>
    <td style="text-align:right;"> 52 </td>
    <td style="text-align:left;"> 0.53 [0.46, 0.60] </td>
-   <td style="text-align:left;"> 0.722 </td>
-   <td style="text-align:right;"> 0.015 </td>
+   <td style="text-align:left;"> 0.724 </td>
+   <td style="text-align:right;"> 0.012 </td>
   </tr>
 </tbody>
 </table>
